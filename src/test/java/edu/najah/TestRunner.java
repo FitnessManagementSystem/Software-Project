@@ -3,6 +3,7 @@ package edu.najah;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
+import stepdefinitions.InstructorProgramManagement;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
@@ -13,5 +14,4 @@ import org.junit.runner.RunWith;
 )
 
 public class TestRunner {
-
 }
