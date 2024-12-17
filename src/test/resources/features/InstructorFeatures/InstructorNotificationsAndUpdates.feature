@@ -1,5 +1,4 @@
 Feature: Notifications and Updates
-  Fitness instructors can notify clients about program updates and special announcements.
 
   Background:
     Given the instructor is logged into the system

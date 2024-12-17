@@ -1,5 +1,4 @@
 Feature: Instructor Program Management
-  Fitness instructors can create, update, and delete fitness programs to better serve clients.
 
   Background:
     Given the instructor is logged into the system

@@ -1,45 +1,29 @@
 package stepdefinitions.AdminStepDefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AdminContentManagementStepDefinitions {
-    // Approve or reject content types shared
-    @When("the admin reviews the submitted {string}")
-    public void the_admin_reviews_the_submitted(String string) {
-        // Write code here that turns the phrase above into concrete actions
-
+    //Approve or reject content
+    @When("I navigate to the Content Management section")
+    public void iNavigateToTheContentManagementSection() {
     }
 
-    @Then("the admin can approve the {string}")
-    public void the_admin_can_approve_the(String string) {
-        // Write code here that turns the phrase above into concrete actions
-
+    @And("I {string} a {string}")
+    public void iApproveOrDeny(String actionType, String contentType) {
     }
 
-    @Then("the admin can reject the {string}")
-    public void the_admin_can_reject_the(String string) {
-        // Write code here that turns the phrase above into concrete actions
-
+    @Then("the content should be {string}")
+    public void theContentShouldBe(String statusMessage) {
     }
 
-    // Handle user feedback and complaints
-    @When("the admin reviews user feedback and complaints")
-    public void the_admin_reviews_user_feedback_and_complaints() {
-        // Write code here that turns the phrase above into concrete actions
-
+    //Handle user feedback and complaints
+    @And("I handle user complaints")
+    public void iHandleUserComplaints() {
     }
 
-    @Then("the admin can handle the user feedback")
-    public void the_admin_can_handle_the_user_feedback() {
-        // Write code here that turns the phrase above into concrete actions
-
+    @Then("I should see the complaints are marked as resolved")
+    public void iShouldSeeTheComplaintsAreMarkedAsResolved() {
     }
-
-    @Then("handle the complaints")
-    public void handle_the_complaints() {
-        // Write code here that turns the phrase above into concrete actions
-
-    }
-
 }

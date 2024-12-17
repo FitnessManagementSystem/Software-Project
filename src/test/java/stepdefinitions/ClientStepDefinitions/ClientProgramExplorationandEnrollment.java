@@ -1,4 +1,4 @@
-package stepdefinitions;
+package stepdefinitions.ClientStepDefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -45,4 +45,7 @@ public class ClientProgramExplorationandEnrollment {
     }
 
 
+    @Then("I should see a list of programs based on {string}")
+    public void iShouldSeeAListOfProgramsBasedOn(String arg0) {
+    }
 }

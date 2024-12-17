@@ -1,28 +1,23 @@
 Feature: Admin Content Management
 
   Background:
-    Given the admin is logged in
+    Given I am logged in as an Admin user
 
-  Scenario Outline: Approve or reject content types shared by instructors
-    When the admin reviews the submitted "<ContentType>"
-    Then the admin can approve the "<ContentType>"
-    And the admin can reject the "<ContentType>"
+  Scenario Outline: Approve or reject content
+    When I navigate to the Content Management section
+    And I "<Approval Action>" a "<Content Type>"
+    Then the content should be "<Status>"
 
     Examples:
-      | ContentType       |
-      | wellness articles |
-      | tips              |
-      | recipes           |
-
-  Scenario Outline: Approve articles or tips shared on health and wellness
-    When the admin reviews the submitted "<ContentType>"
-    Then the admin can approve the "<ContentType>"
-    Examples:
-      | ContentType    |
-      | health article |
-      | wellness tip   |
+      | Approval Action | Content Type     | Status   |
+      | approve         | wellness article | approved |
+      | approve         | health tip       | approved |
+      | approve         | recipe           | approved |
+      | reject          | wellness article | rejected |
+      | reject          | health tip       | rejected |
+      | reject          | recipe           | rejected |
 
   Scenario: Handle user feedback and complaints
-    When the admin reviews user feedback and complaints
-    Then the admin can handle the user feedback
-    And handle the complaints
+    When I navigate to the Content Management section
+    And I handle user complaints
+    Then I should see the complaints are marked as resolved

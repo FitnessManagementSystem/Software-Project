@@ -1,5 +1,4 @@
 Feature: Instructor Progress Tracking
-  Fitness instructors can monitor and support client progress.
 
   Background:
     Given the instructor is logged into the system

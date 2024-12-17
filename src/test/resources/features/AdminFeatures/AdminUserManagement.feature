@@ -1,20 +1,24 @@
 Feature: Admin User Management
-  Admins can manage user accounts, approve registrations, and monitor engagement
 
   Background:
-    Given  the admin is logged in
+    Given I am logged in as an Admin user
 
-  Scenario: Add, update, and deactivate accounts
-    When the admin accesses the user management panel
-    Then the admin can add accounts for instructors and clients
-    And update accounts for instructors and clients
-    And deactivate accounts for instructors and clients
+  Scenario Outline: Manage user accounts
+    When I navigate to the User Management section
+    And I "<Action>" an account for "<User Type>"
+    Then I should see the account is "<Status>"
 
-  Scenario: Approve new instructor registration
-    When the admin views pending instructor registration
-    Then the admin can approve new instructor registration
+    Examples:
+      | Action     | User Type      | Status      |
+      | add        | instructor     | created     |
+      | add        | client         | created     |
+      | update     | instructor     | updated     |
+      | update     | client         | updated     |
+      | deactivate | instructor     | deactivated |
+      | deactivate | client         | deactivated |
+      | approve    | new instructor | approved    |
 
-  Scenario: Monitor user activity and engagement statistics
-    When the admin the user activity dashboard
-    Then the admin can monitor user activity
-    And Monitor engagement statistics
+  Scenario: Monitor user activity
+    When I navigate to the User Management section
+    And I view user activity statistics
+    Then I should see user engagement statistics displayed
