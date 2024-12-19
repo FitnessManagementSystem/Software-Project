@@ -4,27 +4,28 @@ Feature: Program Exploration and Enrollment
     Given I am on the Program Exploration and Enrollment page
 
   Scenario Outline: Browse programs by filters
-    When I want to browse programs
-    And I select the "<Filter Type>" filter
-    Then I should see a list of programs based on "<Filter Value>"
+    When I select the "<Filter Type>" filter
+    And I press on search
+    Then I should see a list of programs such as "<Filter Value>" based on "<Filter Type>"
 
     Examples:
-      | Filter Type      | Filter Value    |
-      | Difficulty level | Beginner        |
-      | Difficulty level | Intermediate    |
-      | Difficulty level | Advanced        |
-      | Focus area       | Weight loss     |
-      | Focus area       | Muscle building |
-      | Focus area       | Flexibility     |
+      | Filter Type |  | Filter Value    |
+      | difficulty  |  | Beginner        |
+      | difficulty  |  | Intermediate    |
+      | difficulty  |  | Advanced        |
+      | focus area  |  | Weight loss     |
+      | focus area  |  | Muscle building |
+      | focus area  |  | Flexibility     |
 
   Scenario Outline: Enroll in a program
-    When I want to enroll in a program
-    And I select the program named "<Program Name>"
-    And I confirm my enrollment
+    When I confirm my enrollment to a program "<Program Name>" by "<username>" and status "<status>"
     Then I should see the message "<Enrollment Message>"
 
     Examples:
-      | Program Name    | Enrollment Message    |
-      | Weight Loss     | Enrolled successfully |
-      | Muscle Building | Enrolled successfully |
-      | Flexibility     | Enrolled successfully |
+      | username |  | Program Name |  | status    | Enrollment Message                       |
+      | Arqam    |  | Weight Loss  |  | active    | Enrolled successfully                    |
+      | Arqa     |  | Yoga         |  | completed | The program is completed                 |
+      | 2211     |  | Flexibility  |  | completed | User doesn't exist                       |
+      | AA       |  |              |  | active    | The program doesn't exist                |
+      | Arqam    |  | Weight Loss  |  | active    | User is already enrolled in this program |
+

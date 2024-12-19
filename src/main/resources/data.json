@@ -40,15 +40,27 @@
   "programs": [
     {
       "id": 1,
-      "title": "Yoga for Beginners",
+      "title": "Weight Loss",
       "duration": "4 weeks",
-      "difficulty": "Beginner"
+      "difficulty": "Beginner",
+      "price": "$100",
+      "status": "active"
     },
     {
       "id": 2,
-      "title": "Strength Training",
+      "title": "Flexibility",
       "duration": "6 weeks",
-      "difficulty": "Intermediate"
+      "focus area": "Intermediate",
+      "price": "$100",
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "title": "Yoga",
+      "duration": "4 weeks",
+      "focus area": "Advanced",
+      "price": "$120",
+      "status": "completed"
     }
   ],
   "instructorsAwaitingApproval": {
@@ -59,22 +71,6 @@
     "aassa": {
       "password": "sadasda",
       "role": "Instructor"
-    }
-  },
-  "userProfiles": {
-    "John Doe": {
-      "dietaryRestriction": "No",
-      "fitnessGoal": "Weight Loss",
-      "name": "John Doe",
-      "dietaryPreference": "Yes",
-      "age": "25"
-    },
-    "Alice": {
-      "dietaryRestriction": "No",
-      "fitnessGoal": "Weight Loss",
-      "name": "Alice",
-      "dietaryPreference": "Yes",
-      "age": "20"
     }
   }
 }
