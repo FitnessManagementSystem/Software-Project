@@ -7,21 +7,16 @@ Feature: Client Account Management
     When I enter the personal detail "<detail>" with value "<value>"
     And I set the dietary preference "<preference>" to "<preferenceValue>"
     And I add the dietary restriction "<restriction>" to "<restrictionValue>"
+    And I set the age to "<ageValue>"
+    And I set the fitness goal to "<fitnessGoal>"
     And I save the profile
     Then I should see "<successMessage>"
-    Examples:
-      | detail | value    | preference | preferenceValue | restriction | restrictionValue | successMessage               |
-      | Name   | John Doe | Vegetarian | Yes             | Gluten-Free | No               | Profile created successfully |
-      | Name   | Jane Doe | Vegan      | Yes             | Nut-Free    | Yes              | Profile created successfully |
 
-  Scenario Outline: Update an existing profile
-    Given I have an existing profile
-    When I update the personal detail "<detail>" to "<value>"
-    And I update the dietary preference "<preference>" to "<preferenceValue>"
-    And I update the dietary restriction "<restriction>" to "<restrictionValue>"
-    And I save the changes
-    Then I should see "<updateMessage>"
     Examples:
-      | detail | value        | preference | preferenceValue | restriction | restrictionValue | updateMessage                |
-      | Name   | John Smith   | Vegetarian | No              | Gluten-Free | Yes              | Profile updated successfully |
-      | Name   | Jane Johnson | Vegan      | No              | Nut-Free    | No               | Profile updated successfully |
+      | detail | value    | preference | preferenceValue | restriction | restrictionValue | ageValue | fitnessGoal | successMessage                       |
+      | Name   | John Doe | Vegetarian | Yes             | Gluten-Free | No               | 25       | Weight Loss | Profile created successfully         |
+      | Name   | Alice    | Vegetarian | Yes             | Gluten-Free | No               | 20       | Weight Loss | Profile created successfully         |
+      | Name   |          | Vegetarian | Yes             | Gluten-Free | No               | 25       | Weight Loss | Name is empty                        |
+      | Name   | Alice    | Vegetarian | Yes             | Gluten-Free | Yes              | 20       | Weight Loss | Profile already exists for this name |
+
+

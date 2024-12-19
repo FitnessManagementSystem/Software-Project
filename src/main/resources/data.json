@@ -31,6 +31,10 @@
     "aaa": {
       "password": "sss",
       "role": "Client"
+    },
+    "aassa": {
+      "password": "sadasda",
+      "role": "Client"
     }
   },
   "programs": [
@@ -51,6 +55,26 @@
     "ArqamM": {
       "password": "aaa",
       "role": "Instructor"
+    },
+    "aassa": {
+      "password": "sadasda",
+      "role": "Instructor"
+    }
+  },
+  "userProfiles": {
+    "John Doe": {
+      "dietaryRestriction": "No",
+      "fitnessGoal": "Weight Loss",
+      "name": "John Doe",
+      "dietaryPreference": "Yes",
+      "age": "25"
+    },
+    "Alice": {
+      "dietaryRestriction": "No",
+      "fitnessGoal": "Weight Loss",
+      "name": "Alice",
+      "dietaryPreference": "Yes",
+      "age": "20"
     }
   }
 }
