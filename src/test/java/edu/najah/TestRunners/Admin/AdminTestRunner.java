@@ -1,4 +1,4 @@
-package edu.najah.TestRunners;
+package edu.najah.TestRunners.Admin;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;

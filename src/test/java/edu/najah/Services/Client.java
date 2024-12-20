@@ -183,4 +183,71 @@ public class Client {
     }
 
 
+    public String generateCompletedProgramsList(String programName) {
+        try {
+            Map<String, Object> data = JsonFileHandler.loadJsonData();
+
+            List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
+            List<Map<String, Object>> enrolledUsers = (List<Map<String, Object>>) data.get("enrolledUsers");
+
+            if (programs == null || programs.isEmpty()) {
+                return "No programs available";
+            }
+
+            if (enrolledUsers == null || enrolledUsers.isEmpty()) {
+                return "No enrolled users found";
+            }
+
+            List<Map<String, Object>> completedPrograms = new ArrayList<>();
+
+            boolean programFound = false;
+            for (Map<String, Object> program : programs) {
+                if (programName.equals(program.get("title"))) {
+                    programFound = true;
+                    if ("completed".equals(program.get("status"))) {
+                        boolean userEnrolled = false;
+                        for (Map<String, Object> enrollment : enrolledUsers) {
+                            if (enrollment.get("programId").equals(program.get("id")) && getName().equals(enrollment.get("userName"))) {
+                                userEnrolled = true;
+                                completedPrograms.add(program);
+                                break;
+                            }
+                        }
+                        if (!userEnrolled) {
+                            return "User isn't enrolled in this program";
+                        }
+                    } else {
+                        return "program is still active";
+                    }
+                }
+            }
+
+            if (!programFound) {
+                return "No completed programs match the specified name";
+            }
+
+            if (completedPrograms.isEmpty()) {
+                return "There is no completed programs";
+            }
+
+            StringBuilder result = new StringBuilder("Completed Programs:\n");
+            for (Map<String, Object> program : completedPrograms) {
+                result.append("Title: ").append(program.get("title")).append("\n");
+                result.append("ID: ").append(program.get("id")).append("\n");
+                result.append("Status: ").append(program.get("status")).append("\n\n");
+            }
+
+            //return result.toString();
+            return "Programs found successfully";
+
+        } catch (IOException e) {
+            logger.severe("Error reading or writing the JSON file: " + e.getMessage());
+            return "Error reading or writing the JSON file: " + e.getMessage();
+        } catch (ClassCastException e) {
+            logger.severe("Error processing the data structure: " + e.getMessage());
+            return "Error processing the data structure: " + e.getMessage();
+        }
+    }
+
+
 }
