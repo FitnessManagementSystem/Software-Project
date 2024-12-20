@@ -14,6 +14,7 @@ public class ClientAccountManagment {
     private final Client client = new Client();
     private String feedbackMessage;
 
+
     @Given("I am on the account management page")
     public void i_am_on_the_account_management_page() {
         logger.info("Navigated to the account management page.");

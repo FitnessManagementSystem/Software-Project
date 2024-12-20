@@ -1,59 +1,37 @@
 package stepdefinitions.ClientStepDefinitions;
 
+import edu.najah.Services.Client;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
+
+import java.util.logging.Logger;
 
 public class ClientFeedbackandReviwes {
+    private static final Logger logger = Logger.getLogger(ClientAccountManagment.class.getName());
+    private final Client client = new Client();
+    private String feedbackMessage;
+
     @Given("I am on the Feedback and Reviews page")
     public void i_am_on_the_feedback_and_reviews_page() {
-
-    }
-
-    @Given("I have completed the program")
-    public void i_have_completed_the_program() {
-
-    }
-
-    @When("I want to rate and review the program {string}")
-    public void i_want_to_rate_and_review_the_program(String string) {
-
-    }
-
-    @When("I want to enter my rating {string} and my review {string}")
-    public void i_want_to_enter_my_rating_and_my_review(String string, String string2) {
-
-    }
-
-    @Then("I should see {string} and {string}")
-    public void i_should_see_and(String string, String string2) {
-
-    }
-
-    @Then("I should submit my rate and review")
-    public void i_should_submit_my_rate_and_review() {
-
-    }
-
-    @When("I want to submit improvement suggestions to instructors")
-    public void i_want_to_submit_improvement_suggestions_to_instructors() {
-
-    }
-
-    @When("I want to enter my improvement suggestion {string}")
-    public void i_want_to_enter_my_improvement_suggestion(String string) {
-
-    }
-
-    @Then("I should see my {string}")
-    public void i_should_see_my(String string) {
-
-    }
-
-    @Then("I should submit my improvement suggestions")
-    public void i_should_submit_my_improvement_suggestions() {
-
+        logger.info("Navigated to the feedback and reviews page");
     }
 
 
+    @And("I have completed the program")
+    public void iHaveCompletedTheProgram() {
+        logger.info("User has completed the program");
+    }
+
+    @When("I want to rate and review the program {string} with rating {string} and review {string}")
+    public void iWantToRateAndReviewTheProgramWithRatingAndReview(String programName, String rating, String review) {
+        feedbackMessage = client.reviewProgram(programName, "Arqam", rating, review);
+    }
+
+    @Then("I should see a message {string}")
+    public void iShouldSeeAMessage(String expectedMessage) {
+        Assert.assertEquals("Expected message didn't match the feedback message for submitting ar review", expectedMessage, feedbackMessage);
+    }
 }
