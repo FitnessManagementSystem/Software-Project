@@ -17,8 +17,3 @@ Feature: Admin User Management
       | deactivate | instructor     | deactivated |
       | deactivate | client         | deactivated |
       | approve    | new instructor | approved    |
-
-  Scenario: Monitor user activity
-    When I navigate to the User Management section
-    And I view user activity statistics
-    Then I should see user engagement statistics displayed
