@@ -381,5 +381,4 @@ public class Main extends javax.swing.JFrame {
 
 class App extends javax.swing.JFrame {
 
-
 }
