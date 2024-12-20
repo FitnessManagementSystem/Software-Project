@@ -1,76 +1,73 @@
 {
-  "users": {
-    "admin1": {
-      "password": "adminpass",
-      "role": "Admin"
+  "users" : {
+    "admin1" : {
+      "password" : "adminpass",
+      "role" : "Admin"
     },
-    "instructor1": {
-      "password": "instructorpass",
-      "role": "Instructor"
+    "instructor1" : {
+      "password" : "instructorpass",
+      "role" : "Instructor"
     },
-    "client1": {
-      "password": "clientpass",
-      "role": "Client"
+    "client1" : {
+      "password" : "clientpass",
+      "role" : "Client"
     },
-    "Arqam": {
-      "password": "Arqam1",
-      "role": "Admin"
+    "Arqam" : {
+      "password" : "Arqam1",
+      "role" : "Admin"
     },
-    "Arqa": {
-      "password": "Arqam381183",
-      "role": "Client"
+    "Arqa" : {
+      "password" : "Arqam381183",
+      "role" : "Client"
     },
-    "AA": {
-      "password": "AAAA",
-      "role": "Client"
+    "AA" : {
+      "password" : "AAAA",
+      "role" : "Client"
     },
-    "Test": {
-      "password": "Test1111",
-      "role": "Client"
+    "Test" : {
+      "password" : "Test1111",
+      "role" : "Client"
     },
-    "aaa": {
-      "password": "sss",
-      "role": "Client"
+    "aaa" : {
+      "password" : "sss",
+      "role" : "Client"
     },
-    "aassa": {
-      "password": "sadasda",
-      "role": "Client"
+    "aassa" : {
+      "password" : "sadasda",
+      "role" : "Client"
     }
   },
-  "programs": [
-    {
-      "id": 1,
-      "title": "Weight Loss",
-      "duration": "4 weeks",
-      "difficulty": "Beginner",
-      "price": "$100",
-      "status": "active"
+  "programs" : [ {
+    "id" : 1,
+    "title" : "Weight Loss",
+    "duration" : "4 weeks",
+    "difficulty" : "Beginner",
+    "price" : "$100",
+    "status" : "active"
+  }, {
+    "id" : 2,
+    "title" : "Flexibility",
+    "duration" : "6 weeks",
+    "focus area" : "Intermediate",
+    "price" : "$100",
+    "status" : "active"
+  }, {
+    "id" : 3,
+    "title" : "Yoga",
+    "duration" : "4 weeks",
+    "focus area" : "Advanced",
+    "price" : "$120",
+    "status" : "completed"
+  } ],
+  "instructorsAwaitingApproval" : {
+    "ArqamM" : {
+      "password" : "aaa",
+      "role" : "Instructor"
     },
-    {
-      "id": 2,
-      "title": "Flexibility",
-      "duration": "6 weeks",
-      "focus area": "Intermediate",
-      "price": "$100",
-      "status": "active"
-    },
-    {
-      "id": 3,
-      "title": "Yoga",
-      "duration": "4 weeks",
-      "focus area": "Advanced",
-      "price": "$120",
-      "status": "completed"
-    }
-  ],
-  "instructorsAwaitingApproval": {
-    "ArqamM": {
-      "password": "aaa",
-      "role": "Instructor"
-    },
-    "aassa": {
-      "password": "sadasda",
-      "role": "Instructor"
+    "aassa" : {
+      "password" : "sadasda",
+      "role" : "Instructor"
     }
   }
+
 }
