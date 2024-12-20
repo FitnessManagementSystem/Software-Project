@@ -1,6 +1,6 @@
 package stepdefinitions.ClientStepDefinitions;
 
-import edu.najah.Services.Client;
+import edu.najah.services.Client;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;

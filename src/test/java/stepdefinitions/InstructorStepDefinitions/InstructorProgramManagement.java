@@ -1,6 +1,6 @@
 package stepdefinitions.InstructorStepDefinitions;
 
-import edu.najah.Services.Instructor;
+import edu.najah.services.Instructor;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

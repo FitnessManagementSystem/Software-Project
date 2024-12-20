@@ -1,6 +1,6 @@
 package stepdefinitions.AdminStepDefinitions;
 
-import edu.najah.Services.Admin;
+import edu.najah.services.Admin;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import stepdefinitions.ClientStepDefinitions.ClientAccountManagment;
