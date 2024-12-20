@@ -1,6 +1,6 @@
 package stepdefinitions.ClientStepDefinitions;
 
-import edu.najah.Services.Client;
+import edu.najah.services.ClientService;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class ClientFeedbackandReviwes {
     private static final Logger logger = Logger.getLogger(ClientAccountManagment.class.getName());
-    private final Client client = new Client();
+    private final ClientService clientService = new ClientService();
     private String feedbackMessage;
 
     @Given("I am on the Feedback and Reviews page")
@@ -27,7 +27,7 @@ public class ClientFeedbackandReviwes {
 
     @When("I want to rate and review the program {string} with rating {string} and review {string}")
     public void iWantToRateAndReviewTheProgramWithRatingAndReview(String programName, String rating, String review) {
-        feedbackMessage = client.reviewProgram(programName, "Arqam", rating, review);
+        feedbackMessage = clientService.reviewProgram(programName, "Arqam", rating, review);
     }
 
     @Then("I should see a message {string}")

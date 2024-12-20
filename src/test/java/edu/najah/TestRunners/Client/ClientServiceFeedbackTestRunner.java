@@ -6,12 +6,12 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/features/ClientFeatures/ClientProgramExplorationandEnrollment.feature", // Path to your feature files
+        features = "src/test/resources/features/ClientFeatures/ClientFeedbackandReviews.feature", // Path to your feature files
         glue = "stepdefinitions/ClientStepDefinitions", // Package containing step definitions
         plugin = {"pretty", "html:target/cucumber-reports.html"}, // Report generation
         monochrome = true // Makes output readable
 )
 
-public class ClientProgramExplorationAndEnrollmentTestRunner {
+public class ClientServiceFeedbackTestRunner {
 
 }

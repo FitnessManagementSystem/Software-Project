@@ -1,4 +1,4 @@
-package edu.najah.Services;
+package edu.najah.services;
 
 import edu.najah.utilities.JsonFileHandler;
 
@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class Client {
-    private static final Logger logger = Logger.getLogger(Client.class.getName());
+public class ClientService {
+    private static final Logger logger = Logger.getLogger(ClientService.class.getName());
     private String clientName;
     private String clientPreferenceValue;
     private String clientRestrictionValue;
