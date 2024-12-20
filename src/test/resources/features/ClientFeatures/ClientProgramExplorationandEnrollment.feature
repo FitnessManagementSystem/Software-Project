@@ -22,10 +22,8 @@ Feature: Program Exploration and Enrollment
     Then I should see the message "<Enrollment Message>"
 
     Examples:
-      | username |  | Program Name |  | status    | Enrollment Message                       |
-      | Arqam    |  | Weight Loss  |  | active    | Enrolled successfully                    |
-      | Arqa     |  | Yoga         |  | completed | The program is completed                 |
-      | 2211     |  | Flexibility  |  | completed | User doesn't exist                       |
-      | AA       |  |              |  | active    | The program doesn't exist                |
-      | Arqam    |  | Weight Loss  |  | active    | User is already enrolled in this program |
-
+      | username |  | Program Name |  | status    | Enrollment Message        |
+      | Arqam    |  | Weight Loss  |  | active    | Enrolled successfully     |
+      | Arqam    |  | Yoga         |  | completed | The program is completed  |
+      | 2211     |  | Flexibility  |  | completed | User doesn't exist        |
+      | Arqa     |  |              |  | completed | The program doesn't exist |

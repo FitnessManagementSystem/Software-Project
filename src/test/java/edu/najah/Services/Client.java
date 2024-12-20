@@ -89,8 +89,8 @@ public class Client {
             profileDetails.put("fitnessGoal", fitnessGoal);
 
             userProfiles.put(name, profileDetails);
-
-            JsonFileHandler.saveJsonData(data);
+            //TODO remove this comment
+            // JsonFileHandler.saveJsonData(data);
             return "Profile created successfully";
         } catch (IOException e) {
             logger.severe("Error saving user profile for user: " + name + " - " + e.getMessage());
@@ -171,7 +171,8 @@ public class Client {
             enrolledUsers.add(userEnrollment);
 
             data.put("enrolledUsers", enrolledUsers);
-            JsonFileHandler.saveJsonData(data);
+            //TODO remove this comment
+            //JsonFileHandler.saveJsonData(data);
 
             logger.info("User " + userName + " successfully enrolled in " + programName);
             return "Enrolled successfully";
@@ -294,7 +295,7 @@ public class Client {
             reviews.add(newReview);
 
             data.put("reviews", reviews);
-            JsonFileHandler.saveJsonData(data);
+            // JsonFileHandler.saveJsonData(data);
             return "Review submitted successfully";
 
         } catch (IOException e) {

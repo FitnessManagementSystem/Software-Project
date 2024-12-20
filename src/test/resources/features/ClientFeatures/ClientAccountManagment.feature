@@ -17,6 +17,6 @@ Feature: Client Account Management
       | Name   | John Doe | Vegetarian | Yes             | Gluten-Free | No               | 25       | Weight Loss | Profile created successfully         |
       | Name   | Alice    | Vegetarian | Yes             | Gluten-Free | No               | 20       | Weight Loss | Profile created successfully         |
       | Name   |          | Vegetarian | Yes             | Gluten-Free | No               | 25       | Weight Loss | Name is empty                        |
-      | Name   | Alice    | Vegetarian | Yes             | Gluten-Free | Yes              | 20       | Weight Loss | Profile already exists for this name |
+      | Name   | Jack     | Vegetarian | Yes             | Gluten-Free | Yes              | 20       | Weight Loss | Profile already exists for this name |
 
 

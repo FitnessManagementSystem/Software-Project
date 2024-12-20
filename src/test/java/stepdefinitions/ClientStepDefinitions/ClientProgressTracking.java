@@ -14,7 +14,7 @@ public class ClientProgressTracking {
 
     @Given("I am on the Progress Tracking page")
     public void i_am_on_the_progress_tracking_page() {
-        client.setName("Arqam");
+        client.setName("instructor1");
         logger.info("Navigated to the personal programs page");
     }
 

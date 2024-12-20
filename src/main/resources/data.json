@@ -44,7 +44,7 @@
       "duration": "4 weeks",
       "difficulty": "Beginner",
       "price": "$100",
-      "status": "completed"
+      "status": "active"
     },
     {
       "id": 2,
@@ -69,6 +69,14 @@
       "focus area": "Advanced",
       "price": "$120",
       "status": "completed"
+    },
+    {
+      "id": 5,
+      "title": "Boxing",
+      "duration": "4 weeks",
+      "focus area": "Advanced",
+      "price": "$120",
+      "status": "active"
     }
   ],
   "instructorsAwaitingApproval": {
@@ -79,28 +87,6 @@
     "aassa": {
       "password": "sadasda",
       "role": "Instructor"
-    }
-  },
-  "enrolledUsers": [
-    {
-      "userName": "Arqam",
-      "programId": 1
-    }
-  ],
-  "userProfiles": {
-    "John Doe": {
-      "dietaryRestriction": "No",
-      "fitnessGoal": "Weight Loss",
-      "name": "John Doe",
-      "dietaryPreference": "Yes",
-      "age": "25"
-    },
-    "Alice": {
-      "dietaryRestriction": "No",
-      "fitnessGoal": "Weight Loss",
-      "name": "Alice",
-      "dietaryPreference": "Yes",
-      "age": "20"
     }
   },
   "reviews": [
@@ -127,6 +113,125 @@
       "rating": 10,
       "userName": "Arqam",
       "programId": 2
+    },
+    {
+      "review": "It was so good",
+      "rating": 9,
+      "userName": "Arqam",
+      "programId": 1
+    },
+    {
+      "review": "Life-changing",
+      "rating": 10,
+      "userName": "Arqam",
+      "programId": 2
+    },
+    {
+      "review": "It was so good",
+      "rating": 9,
+      "userName": "Arqam",
+      "programId": 1
+    },
+    {
+      "review": "Life-changing",
+      "rating": 10,
+      "userName": "Arqam",
+      "programId": 2
+    },
+    {
+      "review": "It was so good",
+      "rating": 9,
+      "userName": "Arqam",
+      "programId": 1
+    },
+    {
+      "review": "Life-changing",
+      "rating": 10,
+      "userName": "Arqam",
+      "programId": 2
+    }
+  ],
+  "messages": [
+    {
+      "message_body": "you doing good",
+      "from": "instructor1",
+      "to": "client1"
+    },
+    {
+      "message_body": "you doing good",
+      "from": "instructor1",
+      "to": "client1"
+    },
+    {
+      "message_body": "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+      "from": "instructor1",
+      "to": "client1"
+    },
+    {
+      "message_body": "Good job on your progress. Keep up the good work!",
+      "from": "instructor1",
+      "to": "client1"
+    },
+    {
+      "message_body": "you doing good",
+      "from": "instructor1",
+      "to": "client1"
+    },
+    {
+      "message_body": "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+      "from": "instructor1",
+      "to": "client1"
+    },
+    {
+      "message_body": "Good job on your progress. Keep up the good work!",
+      "from": "instructor1",
+      "to": "client1"
+    }
+  ],
+  "notifications": [
+    {
+      "program_id": 5,
+      "message": "A new program has been announced! Program ID: 5",
+      "timestamp": "2024-12-20"
+    },
+    {
+      "program_id": 5,
+      "message": "A new program has been announced! Program ID: 5",
+      "timestamp": "2024-12-21"
+    },
+    {
+      "program_id": 6,
+      "message": "A new program has been announced! Program ID: 6",
+      "timestamp": "2024-12-21"
+    },
+    {
+      "program_id": 5,
+      "message": "A new program has been announced! Program ID: 5",
+      "timestamp": "2024-12-21"
+    },
+    {
+      "program_id": 6,
+      "message": "A new program has been announced! Program ID: 6",
+      "timestamp": "2024-12-21"
+    }
+  ],
+  "userProfiles": {
+    "Jack": {
+      "dietaryRestriction": "No",
+      "fitnessGoal": "Weight Loss",
+      "name": "Alice",
+      "dietaryPreference": "Yes",
+      "age": "20"
+    }
+  },
+  "enrolledUsers": [
+    {
+      "userName": "instructor1",
+      "programId": 4
+    },
+    {
+      "userName": "instructor1",
+      "programId": 5
     }
   ]
 }

@@ -16,29 +16,31 @@ public class Instructor {
     private String Difficulty_Level;
     private Integer Price;
 
+    public static String getCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return currentDate.format(formatter);
+    }
+
     // Getter and Setter methods
     public String getDuration() {
         return Duration;
-    }
-
-    public String getTitle() {
-        return Program_Title;
-    }
-
-    public void setPrice(Integer priceValue) {
-        Price = priceValue;
-    }
-
-    public void setDifficaltyLevel(String difficultyLevelValue) {
-        Difficulty_Level = difficultyLevelValue;
     }
 
     public void setDuration(String durationValue) {
         Duration = durationValue;
     }
 
+    public String getTitle() {
+        return Program_Title;
+    }
+
     public void setTitle(String programTitle) {
         Program_Title = programTitle;
+    }
+
+    public void setDifficaltyLevel(String difficultyLevelValue) {
+        Difficulty_Level = difficultyLevelValue;
     }
 
     public String getDifficalty() {
@@ -47,6 +49,10 @@ public class Instructor {
 
     public int getPrice() {
         return Price;
+    }
+
+    public void setPrice(Integer priceValue) {
+        Price = priceValue;
     }
 
     // Method to create a new program
@@ -89,7 +95,6 @@ public class Instructor {
             return false; // Return false if an error occurs
         }
     }
-
 
     public String createProgram(String title, String duration, String difficalty, String price) {
         if (title.isEmpty()) {
@@ -241,7 +246,6 @@ public class Instructor {
         }
     }
 
-
     public String sendMessage(String messageBody) {
         Map<String, Object> data;
         try {
@@ -306,11 +310,5 @@ public class Instructor {
             logger.severe("Error sending feedback: " + e.getMessage());
             return "Error sending feedback: " + e.getMessage();
         }
-    }
-
-    public static String getCurrentDate() {
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return currentDate.format(formatter);
     }
 }
