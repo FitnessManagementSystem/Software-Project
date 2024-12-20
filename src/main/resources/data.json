@@ -1,0 +1,120 @@
+{
+  "users": {
+    "admin1": {
+      "password": "adminpass",
+      "role": "Admin"
+    },
+    "instructor1": {
+      "password": "instructorpass",
+      "role": "Instructor"
+    },
+    "client1": {
+      "password": "clientpass",
+      "role": "Client"
+    },
+    "Arqam": {
+      "password": "Arqam1",
+      "role": "Admin"
+    },
+    "Arqa": {
+      "password": "Arqam381183",
+      "role": "Client"
+    },
+    "AA": {
+      "password": "AAAA",
+      "role": "Client"
+    },
+    "Test": {
+      "password": "Test1111",
+      "role": "Client"
+    },
+    "aaa": {
+      "password": "sss",
+      "role": "Client"
+    },
+    "aassa": {
+      "password": "sadasda",
+      "role": "Client"
+    }
+  },
+  "programs": [
+    {
+      "id": 1,
+      "title": "Weight Loss",
+      "duration": "4 weeks",
+      "difficulty": "Beginner",
+      "price": "$100",
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "title": "Flexibility",
+      "duration": "6 weeks",
+      "focus area": "Intermediate",
+      "price": "$100",
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "title": "Muscle Gain",
+      "duration": "4 weeks",
+      "focus area": "Advanced",
+      "price": "$120",
+      "status": "completed"
+    },
+    {
+      "id": 4,
+      "title": "Yoga",
+      "duration": "4 weeks",
+      "focus area": "Advanced",
+      "price": "$120",
+      "status": "completed"
+    }
+  ],
+  "instructorsAwaitingApproval": {
+    "ArqamM": {
+      "password": "aaa",
+      "role": "Instructor"
+    },
+    "aassa": {
+      "password": "sadasda",
+      "role": "Instructor"
+    }
+  },
+  "enrolledUsers": [
+    {
+      "userName": "Arqam",
+      "programId": 1
+    }
+  ],
+  "userProfiles": {
+    "John Doe": {
+      "dietaryRestriction": "No",
+      "fitnessGoal": "Weight Loss",
+      "name": "John Doe",
+      "dietaryPreference": "Yes",
+      "age": "25"
+    },
+    "Alice": {
+      "dietaryRestriction": "No",
+      "fitnessGoal": "Weight Loss",
+      "name": "Alice",
+      "dietaryPreference": "Yes",
+      "age": "20"
+    }
+  },
+  "reviews": [
+    {
+      "review": "It was so good",
+      "rating": 9,
+      "userName": "Arqam",
+      "programId": 1
+    },
+    {
+      "review": "Life-changing",
+      "rating": 10,
+      "userName": "Arqam",
+      "programId": 2
+    }
+  ]
+}
