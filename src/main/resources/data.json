@@ -37,28 +37,7 @@
       "role" : "Client"
     }
   },
-  "programs" : [ {
-    "id" : 1,
-    "title" : "Weight Loss",
-    "duration" : "4 weeks",
-    "difficulty" : "Beginner",
-    "price" : "$100",
-    "status" : "active"
-  }, {
-    "id" : 2,
-    "title" : "Flexibility",
-    "duration" : "6 weeks",
-    "focus area" : "Intermediate",
-    "price" : "$100",
-    "status" : "active"
-  }, {
-    "id" : 3,
-    "title" : "Yoga",
-    "duration" : "4 weeks",
-    "focus area" : "Advanced",
-    "price" : "$120",
-    "status" : "completed"
-  } ],
+  "programs" : [ ],
   "instructorsAwaitingApproval" : {
     "ArqamM" : {
       "password" : "aaa",
@@ -68,6 +47,119 @@
       "password" : "sadasda",
       "role" : "Instructor"
     }
-  }
-
+  },
+  "messages" : [ {
+    "from" : "instructor1",
+    "to" : "client1",
+    "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!"
+  }, {
+    "message_body" : "This is your progress report. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "This is your progress report. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "This is your progress report. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Good job on your progress. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Good job on your progress. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Good job on your progress. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Good job on your progress. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "This is your progress report. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "This is your progress report. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "This is your progress report. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Good job on your progress. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Good job on your progress. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Good job on your progress. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "you doing good",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Good job on your progress. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "you doing good",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
+    "from" : "instructor1",
+    "to" : "client1"
+  }, {
+    "message_body" : "Good job on your progress. Keep up the good work!",
+    "from" : "instructor1",
+    "to" : "client1"
+  } ],
+  "notifications" : [ {
+    "program_id" : 1,
+    "message" : "A new program has been announced! Program ID: 1",
+    "timestamp" : "2024-12-21"
+  }, {
+    "program_id" : 2,
+    "message" : "A new program has been announced! Program ID: 2",
+    "timestamp" : "2024-12-21"
+  } ]
 }
