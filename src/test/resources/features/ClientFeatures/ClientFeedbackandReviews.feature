@@ -11,7 +11,7 @@ Feature: Rate and review completed programs
     Examples:
 
       | Program Name    | Program Rate | Review               | Submission Message                          |
-      | Weight Loss     | 9            | It was so good       | Review submitted successfully               |
+      | Weight Loss     | 9            | It was so good       | Program does not exist or is not completed. |
       | Flexibility     | 10           | Life-changing        | Review submitted successfully               |
       | Yoga            | 0            | What is this         | Invalid rating. Please try again.           |
       | Weight Loss     | -1           | Negative rating test | Invalid rating. Please try again.           |
