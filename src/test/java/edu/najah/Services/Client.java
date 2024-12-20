@@ -250,4 +250,59 @@ public class Client {
     }
 
 
+    public String reviewProgram(String programName, String userName, String rating, String review) {
+        if (Integer.parseInt(rating) > 10 || Integer.parseInt(rating) <= 0) {
+            return "Invalid rating. Please try again.";
+        }
+        if (review == null || review.trim().isEmpty()) {
+            return "Invalid review. Please try again.";
+        }
+
+        try {
+            Map<String, Object> data = JsonFileHandler.loadJsonData();
+
+            List<Map<String, Object>> reviews = (List<Map<String, Object>>) data.get("reviews");
+            List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
+
+
+            if (reviews == null) {
+                reviews = new ArrayList<>();
+                data.put("reviews", reviews);
+            }
+            if (programs == null) {
+                return "Program does not exist or is not completed.";
+            }
+            int programId = -1;
+            for (Map<String, Object> program : programs) {
+                if (programName.equals(program.get("title"))) {
+                    if ("completed".equals(program.get("status"))) {
+                        programId = Integer.parseInt(program.get("id").toString());
+                        break;
+                    } else {
+                        return "Program does not exist or is not completed.";
+                    }
+                }
+            }
+            if (programId == -1) {
+                return "Program does not exist or is not completed.";
+            }
+            Map<String, Object> newReview = new HashMap<>();
+            newReview.put("programId", programId);
+            newReview.put("userName", userName);
+            newReview.put("rating", Integer.parseInt(rating));
+            newReview.put("review", review);
+            reviews.add(newReview);
+
+            data.put("reviews", reviews);
+            JsonFileHandler.saveJsonData(data);
+            return "Review submitted successfully";
+
+        } catch (IOException e) {
+            logger.severe("Error reading or writing the JSON file: " + e.getMessage());
+            return "Error reading or writing the JSON file: " + e.getMessage();
+        } catch (ClassCastException e) {
+            logger.severe("Error processing the data structure: " + e.getMessage());
+            return "Error processing the data structure: " + e.getMessage();
+        }
+    }
 }

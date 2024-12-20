@@ -44,7 +44,7 @@
       "duration": "4 weeks",
       "difficulty": "Beginner",
       "price": "$100",
-      "status": "active"
+      "status": "completed"
     },
     {
       "id": 2,
@@ -52,7 +52,7 @@
       "duration": "6 weeks",
       "focus area": "Intermediate",
       "price": "$100",
-      "status": "active"
+      "status": "completed"
     },
     {
       "id": 3,
@@ -84,9 +84,7 @@
   "enrolledUsers": [
     {
       "userName": "Arqam",
-      "programId": 1,
-      "userName": "Arqam",
-      "programId": 4
+      "programId": 1
     }
   ],
   "userProfiles": {
@@ -104,5 +102,19 @@
       "dietaryPreference": "Yes",
       "age": "20"
     }
-  }
+  },
+  "reviews": [
+    {
+      "review": "It was so good",
+      "rating": 9,
+      "userName": "Arqam",
+      "programId": 1
+    },
+    {
+      "review": "Life-changing",
+      "rating": 10,
+      "userName": "Arqam",
+      "programId": 2
+    }
+  ]
 }
