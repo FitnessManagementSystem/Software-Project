@@ -5,6 +5,8 @@ import edu.najah.utilities.JsonFileHandler;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -15,12 +17,43 @@ public class InstructorService {
     private String Duration;
     private String Difficulty_Level;
     private Integer Price;
+    private String name;
+    private String password;
+
+    private String role;
+
 
     public static String getCurrentDate() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return currentDate.format(formatter);
     }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String nameValue) {
+        name = nameValue;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String passwordValue) {
+        password = passwordValue;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String roleValue) {
+        role = roleValue;
+    }
+
 
     // Getter and Setter methods
     public String getDuration() {
@@ -284,31 +317,32 @@ public class InstructorService {
         try {
             data = JsonFileHandler.loadJsonData();
             if (feedbackBody == null || feedbackBody.trim().isEmpty()) {
-                return "Feedback is empty"; // Returnin
+                return "Feedback is empty"; // Return if feedback is empty
             }
 
-            // Retrieve the message list
-            List<Map<String, String>> messages = (List<Map<String, String>>) data.get("messages");
-            if (messages == null) {
-                messages = new java.util.ArrayList<>();
-                data.put("programs", messages);
+            // Retrieve the feedback list
+            List<Map<String, String>> feedbackList = (List<Map<String, String>>) data.get("feedback");
+            if (feedbackList == null) {
+                feedbackList = new ArrayList<>();
+                data.put("feedback", feedbackList); // Initialize the feedback list if it's null
             }
 
-            // Simulate sending feedback
-            Map<String, String> feedbackMessage = new java.util.HashMap<>();
-            feedbackMessage.put("from", "instructor1");
-            feedbackMessage.put("to", "client1");
-            feedbackMessage.put("message_body", "Good job on your progress. Keep up the good work!");
+            // Simulate sending feedback (similar to message structure)
+            Map<String, String> feedback = new HashMap<>();
+            feedback.put("from", "instructor1");
+            feedback.put("to", "client1");
+            feedback.put("feedback_body", feedbackBody);
 
-            messages.add(feedbackMessage);
+            feedbackList.add(feedback);
 
-            // Save the updated messages back to the JSON file
+            // Save the updated feedback list back to the JSON file
             JsonFileHandler.saveJsonData(data);
 
-            return "Feedback sent successfully";
+            return "Feedback sent successfully"; // Return success message
         } catch (IOException e) {
             logger.severe("Error sending feedback: " + e.getMessage());
-            return "Error sending feedback: " + e.getMessage();
+            return "Error sending feedback: " + e.getMessage(); // Return error message if failed
         }
     }
+
 }

@@ -16,6 +16,25 @@ public class ClientService {
     private String clientRestrictionValue;
     private String fitnessGoalValue;
     private int ageValue;
+    private String role;
+    private String password;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String roleValue) {
+        role = roleValue;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String passwordValue) {
+        password = passwordValue;
+    }
+
 
     public String getName() {
         return clientName;
