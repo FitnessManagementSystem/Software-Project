@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class Instructor {
-    private static final Logger logger = Logger.getLogger(Instructor.class.getName());
+public class InstructorService {
+    private static final Logger logger = Logger.getLogger(InstructorService.class.getName());
     private String Program_Title;
     private String Duration;
     private String Difficulty_Level;

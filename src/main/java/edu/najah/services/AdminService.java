@@ -1,6 +1,6 @@
 package edu.najah.services;
 
-public class Admin {
+public class AdminService {
 
 
 }

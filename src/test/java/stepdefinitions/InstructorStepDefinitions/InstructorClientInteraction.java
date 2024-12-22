@@ -1,6 +1,6 @@
 package stepdefinitions.InstructorStepDefinitions;
 
-import edu.najah.services.Instructor;
+import edu.najah.services.InstructorService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class InstructorClientInteraction {
     private static final Logger logger = Logger.getLogger(InstructorClientInteraction.class.getName());
-    private final Instructor instructor = new Instructor();
+    private final InstructorService instructorService = new InstructorService();
     private String feedbackMessage;
 
     @Given("the instructor accesses the client interaction page")
@@ -21,19 +21,19 @@ public class InstructorClientInteraction {
 
     @When("the instructor sends a report {string} to the client")
     public void theInstructorSendsAReportToTheClient(String report) {
-        feedbackMessage = instructor.sendReport(report);
+        feedbackMessage = instructorService.sendReport(report);
 
     }
 
     @When("the instructor sends a message {string} to the client")
     public void theInstructorSendsAMessageToTheClient(String message) {
-        feedbackMessage = instructor.sendMessage(message);
+        feedbackMessage = instructorService.sendMessage(message);
 
     }
 
     @When("the instructor sends a feedback {string} to the client")
     public void theInstructorSendsAFeedbackToTheClient(String feedback) {
-        feedbackMessage = instructor.sendFeedback(feedback);
+        feedbackMessage = instructorService.sendFeedback(feedback);
 
     }
 
