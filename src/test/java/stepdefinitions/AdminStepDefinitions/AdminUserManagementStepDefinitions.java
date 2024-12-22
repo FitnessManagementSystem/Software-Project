@@ -4,8 +4,6 @@ import edu.najah.services.AdminService;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.util.logging.Logger;
-
 public class AdminUserManagementStepDefinitions {
     private final AdminService adminService = new AdminService();
     private String feedbackMessage;

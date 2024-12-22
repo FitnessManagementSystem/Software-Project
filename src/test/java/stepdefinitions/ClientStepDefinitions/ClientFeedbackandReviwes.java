@@ -10,7 +10,7 @@ import org.junit.Assert;
 import java.util.logging.Logger;
 
 public class ClientFeedbackandReviwes {
-    private static final Logger logger = Logger.getLogger(ClientAccountManagment.class.getName());
+    private static final Logger logger = Logger.getLogger(ClientAccountManagement.class.getName());
     private final ClientService clientService = new ClientService();
     private String feedbackMessage;
 

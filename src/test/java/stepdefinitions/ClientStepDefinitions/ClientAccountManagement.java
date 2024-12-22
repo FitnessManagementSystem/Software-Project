@@ -6,26 +6,20 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static org.mockito.Mockito.mockStatic;
-
-public class ClientAccountManagment {
-    private static final Logger logger = Logger.getLogger(ClientAccountManagment.class.getName());
+public class ClientAccountManagement extends BaseSteps {
+    private static final Logger logger = Logger.getLogger(ClientAccountManagement.class.getName());
     private final ClientService clientService = new ClientService();
     private String feedbackMessage;
-
-    private MockedStatic<JsonFileHandler> mockedFileHandler;
 
     @Given("I am on the account management page")
     public void INavigateToAccountManagementPage() {
         logger.info("Navigated to the account management page.");
-        mockedFileHandler = mockStatic(JsonFileHandler.class);
 
         Map<String, Object> mockData = new HashMap<>();
         Map<String, Map<String, String>> userProfiles = new HashMap<>();
@@ -50,6 +44,6 @@ public class ClientAccountManagment {
     public void i_should_see(String expectedMessage) {
         Assert.assertEquals("Feedback message did not match expected", expectedMessage, feedbackMessage);
         logger.info("Feedback message matched expected: " + expectedMessage);
-        mockedFileHandler.close();
     }
+
 }
