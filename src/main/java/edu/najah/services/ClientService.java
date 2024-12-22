@@ -235,12 +235,8 @@ public class ClientService {
 
 
     private boolean isInvalidRating(String rating) {
-        try {
             int rate = Integer.parseInt(rating);
             return rate <= 0 || rate > 10;
-        } catch (NumberFormatException e) {
-            return true;
-        }
     }
 
     private boolean isInvalidReview(String review) {
