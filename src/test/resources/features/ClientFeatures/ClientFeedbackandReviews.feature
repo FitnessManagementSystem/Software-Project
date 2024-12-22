@@ -5,21 +5,19 @@ Feature: Rate and review completed programs
     And I have completed the program
 
   Scenario Outline: Rate and review completed programs
-    When I want to rate and review the program "<Program Name>"
-    And I want to enter my rating "<Program Rate>" and my review "<Review>"
-    Then I should see "<Program Rate>" and "<Review>"
-    And I should submit my rate and review
+    When I want to rate and review the program "<Program Name>" with rating "<Program Rate>" and review "<Review>"
+    Then I should see a message "<Submission Message>"
 
     Examples:
-      | Program Name | Program Rate | Review         |
-      | Weight Loss  | 9            | It was so good |
 
-  Scenario Outline: Submit improvement suggestions to instructors
-    When I want to submit improvement suggestions to instructors
-    And I want to enter my improvement suggestion "<Improvement Suggestions>"
-    Then I should see my "<Improvement Suggestions>"
-    And I should submit my improvement suggestions
+      | Program Name    | Program Rate | Review               | Submission Message                          |
+      | Weight Loss     | 9            | It was so good       | Program does not exist or is not completed. |
+      | Flexibility     | 10           | Life-changing        | Review submitted successfully               |
+      | Yoga            | 0            | What is this         | Invalid rating. Please try again.           |
+      | Weight Loss     | -1           | Negative rating test | Invalid rating. Please try again.           |
+      | Flexibility     | 11           | Exceeds rating limit | Invalid rating. Please try again.           |
+      | Yoga            | 5            |                      | Invalid review. Please try again.           |
+      | Muscle Building | 5            | Could be better      | Program does not exist or is not completed. |
+      | Nonexistent     | 8            | Program not found    | Program does not exist or is not completed. |
 
-    Examples:
-      | Improvement Suggestions |
-      | Add feature x           |
+

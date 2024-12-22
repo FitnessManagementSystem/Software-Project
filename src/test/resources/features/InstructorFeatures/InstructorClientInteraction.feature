@@ -1,18 +1,32 @@
 Feature: Client Interaction
 
   Background:
-    Given the instructor is logged into the system
+    Given the instructor accesses the client interaction page
 
-
-  Scenario Outline: Communicate with clients
-    When the instructor accesses client interaction page
-    Then the instructor can communicate with clients via "<Method>"
-    And provide feedback to clients
-    And provide progress reports to clients
+  Scenario Outline: Send a report to the client
+    When the instructor sends a report "<report>" to the client
+    Then I should see a report "<successMessage>"
 
     Examples:
-      | Method            |
-      | messaging         |
-      | discussion forums |
+      | report         | successMessage           |
+      | you doing good | Report sent successfully |
+      |                | Report is empty          |
 
+  Scenario Outline: Send a message to the client
+    When the instructor sends a message "<message>" to the client
+    Then I should see a message  "<successMessage>"
+
+    Examples:
+      | message        | successMessage            |
+      | you doing good | Message sent successfully |
+      |                | Message is empty          |
+
+  Scenario Outline: Send feedback to the client
+    When the instructor sends a feedback "<feedback>" to the client
+    Then I should see a feedback "<successMessage>"
+
+    Examples:
+      | feedback       | successMessage             |
+      | you doing good | Feedback sent successfully |
+      |                | Feedback is empty          |
 

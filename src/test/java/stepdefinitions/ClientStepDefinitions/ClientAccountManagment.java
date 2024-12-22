@@ -1,6 +1,6 @@
 package stepdefinitions.ClientStepDefinitions;
 
-import edu.najah.Services.Client;
+import edu.najah.services.Client;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -13,6 +13,7 @@ public class ClientAccountManagment {
     private static final Logger logger = Logger.getLogger(ClientAccountManagment.class.getName());
     private final Client client = new Client();
     private String feedbackMessage;
+
 
     @Given("I am on the account management page")
     public void i_am_on_the_account_management_page() {
