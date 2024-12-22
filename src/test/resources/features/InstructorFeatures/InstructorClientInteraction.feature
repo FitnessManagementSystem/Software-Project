@@ -1,5 +1,4 @@
 Feature: Client Interaction
-  Fitness instructors can communicate with clients and provide feedback to improve their experience.
 
   Background:
     Given the instructor is logged into the system
