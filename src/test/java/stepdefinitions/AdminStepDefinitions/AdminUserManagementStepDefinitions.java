@@ -3,18 +3,15 @@ package stepdefinitions.AdminStepDefinitions;
 import edu.najah.services.AdminService;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import stepdefinitions.ClientStepDefinitions.ClientAccountManagment;
 
 import java.util.logging.Logger;
 
 public class AdminUserManagementStepDefinitions {
-    private static final Logger logger = Logger.getLogger(ClientAccountManagment.class.getName());
     private final AdminService adminService = new AdminService();
     private String feedbackMessage;
 
     @When("I navigate to the User Management section")
     public void i_navigate_to_the_user_management_section() {
-        logger.info("Navigated to the User Management section.");
     }
 
     @When("I {string} an account for {string}")

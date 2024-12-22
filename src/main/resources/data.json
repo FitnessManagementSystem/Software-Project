@@ -163,76 +163,6 @@
       "to": "client1"
     },
     {
-      "message_body": "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "Good job on your progress. Keep up the good work!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "you doing good",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "Good job on your progress. Keep up the good work!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "you doing good",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "Good job on your progress. Keep up the good work!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "you doing good",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "Good job on your progress. Keep up the good work!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "you doing good",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
-      "message_body": "Good job on your progress. Keep up the good work!",
-      "from": "instructor1",
-      "to": "client1"
-    },
-    {
       "message_body": "you doing good",
       "from": "instructor1",
       "to": "client1"
@@ -248,82 +178,6 @@
       "to": "client1"
     }
   ],
-  "notifications": [
-    {
-      "program_id": 5,
-      "message": "A new program has been announced! Program ID: 5",
-      "timestamp": "2024-12-20"
-    },
-    {
-      "program_id": 5,
-      "message": "A new program has been announced! Program ID: 5",
-      "timestamp": "2024-12-21"
-    },
-    {
-      "program_id": 6,
-      "message": "A new program has been announced! Program ID: 6",
-      "timestamp": "2024-12-21"
-    },
-    {
-      "program_id": 5,
-      "message": "A new program has been announced! Program ID: 5",
-      "timestamp": "2024-12-21"
-    },
-    {
-      "program_id": 6,
-      "message": "A new program has been announced! Program ID: 6",
-      "timestamp": "2024-12-21"
-    },
-    {
-      "program_id": 6,
-      "message": "A new program has been announced! Program ID: 6",
-      "timestamp": "2024-12-21"
-    },
-    {
-      "program_id": 7,
-      "message": "A new program has been announced! Program ID: 7",
-      "timestamp": "2024-12-21"
-    },
-    {
-      "program_id": 6,
-      "message": "A new program has been announced! Program ID: 6",
-      "timestamp": "2024-12-21"
-    },
-    {
-      "program_id": 7,
-      "message": "A new program has been announced! Program ID: 7",
-      "timestamp": "2024-12-21"
-    },
-    {
-      "program_id": 6,
-      "message": "A new program has been announced! Program ID: 6",
-      "timestamp": "2024-12-22"
-    },
-    {
-      "program_id": 7,
-      "message": "A new program has been announced! Program ID: 7",
-      "timestamp": "2024-12-22"
-    },
-    {
-      "program_id": 6,
-      "message": "A new program has been announced! Program ID: 6",
-      "timestamp": "2024-12-22"
-    },
-    {
-      "program_id": 7,
-      "message": "A new program has been announced! Program ID: 7",
-      "timestamp": "2024-12-22"
-    }
-  ],
-  "userProfiles": {
-    "Jack": {
-      "dietaryRestriction": "No",
-      "fitnessGoal": "Weight Loss",
-      "name": "Alice",
-      "dietaryPreference": "Yes",
-      "age": "20"
-    }
-  },
   "enrolledUsers": [
     {
       "userName": "instructor1",
@@ -332,6 +186,18 @@
     {
       "userName": "instructor1",
       "programId": 5
+    }
+  ],
+  "notifications": [
+    {
+      "program_id": 6,
+      "message": "A new program has been announced! Program ID: 6",
+      "timestamp": "2024-12-22"
+    },
+    {
+      "program_id": 7,
+      "message": "A new program has been announced! Program ID: 7",
+      "timestamp": "2024-12-22"
     }
   ]
 }

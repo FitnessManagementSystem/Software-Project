@@ -89,8 +89,7 @@ public class ClientService {
             profileDetails.put("fitnessGoal", fitnessGoal);
 
             userProfiles.put(name, profileDetails);
-            //TODO remove this comment
-            // JsonFileHandler.saveJsonData(data);
+            JsonFileHandler.saveJsonData(data);
             return "Profile created successfully";
         } catch (IOException e) {
             logger.severe("Error saving user profile for user: " + name + " - " + e.getMessage());
