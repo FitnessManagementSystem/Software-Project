@@ -103,7 +103,7 @@ public class ClientService {
 
             List<Map<String, Object>> completedPrograms = new ArrayList<>();
 
-            for (Map<String, Object> program : programs)
+            for (Map<String, Object> program : programs) {
                 for (Map<String, Object> enrolledUser : enrolledUsers) {
                     if (program.get("id").equals(enrolledUser.get("programId"))) {
                         if ("active".equals(program.get("status"))) {
@@ -115,6 +115,7 @@ public class ClientService {
                         }
                     }
                 }
+            }
 
             if (completedPrograms.isEmpty()) {
                 logger.warning("User has no completed programs");
@@ -235,8 +236,8 @@ public class ClientService {
 
 
     private boolean isInvalidRating(String rating) {
-            int rate = Integer.parseInt(rating);
-            return rate <= 0 || rate > 10;
+        int rate = Integer.parseInt(rating);
+        return rate <= 0 || rate > 10;
     }
 
     private boolean isInvalidReview(String review) {

@@ -21,4 +21,3 @@ Feature: Admin Subscription Management
       | Instructor1 | Basic    | deactivate | inactive | The Basic subscription plan for Instructor1 has been deactivated successfully.   |
       | Instructor2 | Premium  | deactivate | inactive | The Premium subscription plan for Instructor2 has been deactivated successfully. |
 
-

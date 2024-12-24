@@ -13,4 +13,3 @@ Feature: Content Management
       | Instructor1 | Client1 | Feedback from Instructor1 to Client1 handled successfully! | handled |
       | Instructor2 | Client2 | Feedback from Instructor2 to Client2 handled successfully! | handled |
 
-
