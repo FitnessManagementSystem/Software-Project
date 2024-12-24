@@ -1,7 +1,6 @@
 package stepdefinitions.InstructorStepDefinitions;
 
 import edu.najah.services.InstructorService;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -14,6 +13,7 @@ public class InstructorClientInteraction {
     private final InstructorService instructorService = new InstructorService();
     private String feedbackMessage;
     private String feedbackStatus;
+
     @Given("the instructor accesses the client interaction page")
     public void the_instructor_accesses_the_client_interaction_page() {
         // Simulate the action of accessing the page
@@ -31,7 +31,6 @@ public class InstructorClientInteraction {
         feedbackMessage = instructorService.sendMessage(message);
 
     }
-
 
 
     @Then("I should see a report {string}")

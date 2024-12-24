@@ -436,63 +436,61 @@ public class AdminService {
     }
 
 
-
-
-        public int getActiveProgramsCount() {
-            try {
-                // Load JSON data
-                Map<String, Object> data = JsonFileHandler.loadJsonData();
-                if (data == null) {
-                    return 0; // Return 0 if data is null
-                }
-
-                // Retrieve the programs list
-                List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
-                if (programs == null) {
-                    return 0; // Return 0 if no programs found
-                }
-
-                // Count active programs
-                int activeCount = 0;
-                for (Map<String, Object> program : programs) {
-                    if ("active".equalsIgnoreCase((String) program.get("status"))) {
-                        activeCount++;
-                    }
-                }
-                return activeCount;
-            } catch (Exception e) {
-                System.err.println("Error fetching active programs count: " + e.getMessage());
-                return 0; // Return 0 in case of an exception
+    public int getActiveProgramsCount() {
+        try {
+            // Load JSON data
+            Map<String, Object> data = JsonFileHandler.loadJsonData();
+            if (data == null) {
+                return 0; // Return 0 if data is null
             }
-        }
 
-        public int getCompletedProgramsCount() {
-            try {
-                // Load JSON data
-                Map<String, Object> data = JsonFileHandler.loadJsonData();
-                if (data == null) {
-                    return 0; // Return 0 if data is null
-                }
-
-                // Retrieve the programs list
-                List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
-                if (programs == null) {
-                    return 0; // Return 0 if no programs found
-                }
-
-                // Count completed programs
-                int completedCount = 0;
-                for (Map<String, Object> program : programs) {
-                    if ("completed".equalsIgnoreCase((String) program.get("status"))) {
-                        completedCount++;
-                    }
-                }
-                return completedCount;
-            } catch (Exception e) {
-                System.err.println("Error fetching completed programs count: " + e.getMessage());
-                return 0; // Return 0 in case of an exception
+            // Retrieve the programs list
+            List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
+            if (programs == null) {
+                return 0; // Return 0 if no programs found
             }
+
+            // Count active programs
+            int activeCount = 0;
+            for (Map<String, Object> program : programs) {
+                if ("active".equalsIgnoreCase((String) program.get("status"))) {
+                    activeCount++;
+                }
+            }
+            return activeCount;
+        } catch (Exception e) {
+            System.err.println("Error fetching active programs count: " + e.getMessage());
+            return 0; // Return 0 in case of an exception
         }
+    }
+
+    public int getCompletedProgramsCount() {
+        try {
+            // Load JSON data
+            Map<String, Object> data = JsonFileHandler.loadJsonData();
+            if (data == null) {
+                return 0; // Return 0 if data is null
+            }
+
+            // Retrieve the programs list
+            List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
+            if (programs == null) {
+                return 0; // Return 0 if no programs found
+            }
+
+            // Count completed programs
+            int completedCount = 0;
+            for (Map<String, Object> program : programs) {
+                if ("completed".equalsIgnoreCase((String) program.get("status"))) {
+                    completedCount++;
+                }
+            }
+            return completedCount;
+        } catch (Exception e) {
+            System.err.println("Error fetching completed programs count: " + e.getMessage());
+            return 0; // Return 0 in case of an exception
+        }
+    }
 
     public String deactivatePlan(String selectedPlanType, String selectedUserType) {
         Map<String, Object> data;

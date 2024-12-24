@@ -56,4 +56,3 @@ public class AdminSubscriptionManagementStepDefinitions {
         logger.info("Verified success message: " + expectedMessage);
     }
 }
-

@@ -8,8 +8,8 @@ Feature: Admin Program Monitoring
     And I should see the success message "<successMessage>"
 
     Examples:
-    | successMessage                       |
-    | The report is successfully generated |
+      | successMessage                       |
+      | The report is successfully generated |
 
 
   Scenario Outline: Track active and completed programs
