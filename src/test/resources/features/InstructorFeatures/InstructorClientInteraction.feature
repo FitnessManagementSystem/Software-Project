@@ -29,4 +29,4 @@ Feature: Client Interaction
       | feedback       | successMessage             |
       | you doing good | Feedback sent successfully |
       |                | Feedback is empty          |
-
+      | nice progress  | Feedback sent successfully |

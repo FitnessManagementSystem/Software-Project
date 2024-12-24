@@ -1,6 +1,6 @@
 package stepdefinitions.ClientStepDefinitions;
 
-import edu.najah.services.Client;
+import edu.najah.services.ClientService;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class ClientProgramExplorationandEnrollment {
     private static final Logger logger = Logger.getLogger(ClientAccountManagment.class.getName());
-    private final Client client = new Client();
+    private final ClientService clientService = new ClientService();
     boolean isWorking = Boolean.FALSE;
     private String feedbackMessage;
     private String filterType;
@@ -28,7 +28,7 @@ public class ClientProgramExplorationandEnrollment {
 
     @And("I press on search")
     public void iPressOnSearch() {
-        if (client.searchProgramsByFilter(filterType).isEmpty()) {
+        if (clientService.searchProgramsByFilter(filterType).isEmpty()) {
             isWorking = Boolean.FALSE;
         } else {
             isWorking = Boolean.TRUE;
@@ -46,7 +46,7 @@ public class ClientProgramExplorationandEnrollment {
 
     @When("I confirm my enrollment to a program {string} by {string} and status {string}")
     public void iConfirmMyEnrollmentToAProgramByAndStatus(String programName, String userName, String status) {
-        feedbackMessage = client.enrollInProgram(programName, userName);
+        feedbackMessage = clientService.enrollInProgram(programName, userName);
     }
 
 

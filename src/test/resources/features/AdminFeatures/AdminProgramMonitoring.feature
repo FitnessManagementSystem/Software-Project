@@ -5,18 +5,18 @@ Feature: Admin Program Monitoring
 
   Scenario Outline: View program statistics
     When I navigate to the Program Monitoring section
-    And I view "<Report Type>"
-    Then I should see "<Status>" displayed
+    And I should see the success message "<successMessage>"
 
     Examples:
-      | Report Type            | Status                          |
-      | most popular programs  | programs sorted by enrollment   |
-      | revenue reports        | revenue statistics displayed    |
-      | attendance reports     | attendance statistics displayed |
-      | active and completed   | active and completed programs   |
-      | client progress report | client progress statistics      |
+    | successMessage                       |
+    | The report is successfully generated |
 
-  Scenario: Track program progress
+
+  Scenario Outline: Track active and completed programs
     When I navigate to the Program Monitoring section
-    And I track program progress
-    Then I should see a list of active and completed programs
+    Then I should see the count of active programs as "<activePrograms>"
+    And I should see the count of completed programs as "<completedPrograms>"
+
+    Examples:
+      | activePrograms | completedPrograms |
+      | 2              | 3                 |

@@ -9,13 +9,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class Client {
-    private static final Logger logger = Logger.getLogger(Client.class.getName());
+public class ClientService {
+    private static final Logger logger = Logger.getLogger(ClientService.class.getName());
     private String clientName;
     private String clientPreferenceValue;
     private String clientRestrictionValue;
     private String fitnessGoalValue;
     private int ageValue;
+    private String role;
+    private String password;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String roleValue) {
+        role = roleValue;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String passwordValue) {
+        password = passwordValue;
+    }
+
 
     public String getName() {
         return clientName;
