@@ -369,95 +369,237 @@ public class AdminService {
         }
     }
 
-
-    public String approveContent(String contentType, String actionType) {
+    public String handleFeedback(String instructorName, String clientName) {
         Map<String, Object> data;
         try {
-            // Load the JSON data
+            // Check if the instructorName or clientName is empty
+            if (instructorName == null || instructorName.trim().isEmpty() || clientName == null || clientName.trim().isEmpty()) {
+                return "Feedback not handled"; // Return early if either name is empty
+            }
+
+            // Load JSON data
             data = JsonFileHandler.loadJsonData();
             if (data == null) {
                 data = new java.util.HashMap<>();
             }
 
-            // Retrieve the content approval scenarios from the JSON
-            Object contentApprovalObject = data.get("contentApprovalScenarios");
-            if (contentApprovalObject == null || !(contentApprovalObject instanceof List)) {
-                return "No content approval scenarios available or incorrect data format";
+            // Retrieve the feedback list
+            Object feedbackObject = data.get("feedback");
+            if (feedbackObject == null || !(feedbackObject instanceof List)) {
+                return "No feedback available or incorrect data format";
             }
+            List<Map<String, String>> feedback = (List<Map<String, String>>) feedbackObject;
 
-            List<Map<String, String>> contentApprovalScenarios = (List<Map<String, String>>) contentApprovalObject;
+            // Retrieve the handledFeedbacks list
+            Object handledFeedbacksObject = data.get("handledFeedbacks");
+            if (handledFeedbacksObject == null || !(handledFeedbacksObject instanceof List)) {
+                handledFeedbacksObject = new java.util.ArrayList<>();
+                data.put("handledFeedbacks", handledFeedbacksObject);
+            }
+            List<Map<String, String>> handledFeedbacks = (List<Map<String, String>>) handledFeedbacksObject;
 
-            // Search for the scenario matching the content type and action
-            boolean actionPerformed = false;
-            for (Map<String, String> scenario : contentApprovalScenarios) {
-                if (scenario.get("Content Type").equals(contentType) && scenario.get("Approval Action").equalsIgnoreCase(actionType)) {
-                    actionPerformed = true;
+            // Find the feedback in the feedback list
+            boolean feedbackFound = false;
+            Map<String, String> feedbackToHandle = null;
+            for (Map<String, String> feedbackItem : feedback) {
+                // Ensure the feedback status is "not handled" initially (if not already set)
+                if (feedbackItem.get("status") == null) {
+                    feedbackItem.put("status", "not handled");
+                }
+
+                // Check if this is the feedback we need to handle
+                if (feedbackItem.get("from").equals(instructorName) && feedbackItem.get("to").equals(clientName)) {
+                    feedbackToHandle = feedbackItem;
+                    feedbackFound = true;
                     break;
                 }
             }
 
-            if (!actionPerformed) {
-                return "Invalid action type or content type. Approval action or content type not found.";
+            if (!feedbackFound) {
+                return "Feedback from " + instructorName + " to " + clientName + " not found";
             }
 
-            // Get the content awaiting approval
-            Object contentObject = data.get("contentAwaitingApproval");
-            if (contentObject == null || !(contentObject instanceof List)) {
-                return "No content awaiting approval or incorrect data format";
-            }
-            List<Map<String, String>> contentAwaitingApproval = (List<Map<String, String>>) contentObject;
+            // Now that feedback is found, mark it as handled
+            feedbackToHandle.put("status", "handled");
+            handledFeedbacks.add(feedbackToHandle);
+            feedback.remove(feedbackToHandle); // Remove from the feedback list
 
-            // Get the approved and denied content lists
-            Object approvedObject = data.get("approvedContent");
-            Object deniedObject = data.get("deniedContent");
-
-            if (approvedObject == null || !(approvedObject instanceof List)) {
-                approvedObject = new java.util.ArrayList<>();
-                data.put("approvedContent", approvedObject);
-            }
-            if (deniedObject == null || !(deniedObject instanceof List)) {
-                deniedObject = new java.util.ArrayList<>();
-                data.put("deniedContent", deniedObject);
-            }
-
-            List<Map<String, String>> approvedContent = (List<Map<String, String>>) approvedObject;
-            List<Map<String, String>> deniedContent = (List<Map<String, String>>) deniedObject;
-
-            // Find the content in the awaiting approval list
-            boolean contentFound = false;
-            Map<String, String> contentToMove = null;
-            for (Map<String, String> content : contentAwaitingApproval) {
-                if (content.get("type").equals(contentType)) {
-                    contentToMove = content;
-                    contentFound = true;
-                    break;
-                }
-            }
-
-            if (!contentFound) {
-                return "Content not found in the awaiting approval list!";
-            }
-
-            // Perform the approval or rejection based on actionType
-            if ("approve".equalsIgnoreCase(actionType)) {
-                approvedContent.add(contentToMove);
-            } else if ("reject".equalsIgnoreCase(actionType)) {
-                deniedContent.add(contentToMove);
-            } else {
-                return "Invalid action type. Only 'approve' or 'reject' are valid.";
-            }
-
-            // Remove the content from the awaiting approval list
-            contentAwaitingApproval.remove(contentToMove);
-
-            // Save the updated data
+            // Save the updated data back to the JSON file
             JsonFileHandler.saveJsonData(data);
 
-            return "Content " + actionType + "d successfully!";
+            // Return success message
+            return "Feedback from " + instructorName + " to " + clientName + " handled successfully!";
         } catch (IOException e) {
-            return "Error approving/rejecting content: " + contentType + " - " + e.getMessage();
+            System.err.println("Error handling feedback from " + instructorName + " to " + clientName + " - " + e.getMessage());
+            return "Error handling feedback from " + instructorName + " to " + clientName + " - " + e.getMessage();
+        }
+    }
+
+
+
+
+        public int getActiveProgramsCount() {
+            try {
+                // Load JSON data
+                Map<String, Object> data = JsonFileHandler.loadJsonData();
+                if (data == null) {
+                    return 0; // Return 0 if data is null
+                }
+
+                // Retrieve the programs list
+                List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
+                if (programs == null) {
+                    return 0; // Return 0 if no programs found
+                }
+
+                // Count active programs
+                int activeCount = 0;
+                for (Map<String, Object> program : programs) {
+                    if ("active".equalsIgnoreCase((String) program.get("status"))) {
+                        activeCount++;
+                    }
+                }
+                return activeCount;
+            } catch (Exception e) {
+                System.err.println("Error fetching active programs count: " + e.getMessage());
+                return 0; // Return 0 in case of an exception
+            }
+        }
+
+        public int getCompletedProgramsCount() {
+            try {
+                // Load JSON data
+                Map<String, Object> data = JsonFileHandler.loadJsonData();
+                if (data == null) {
+                    return 0; // Return 0 if data is null
+                }
+
+                // Retrieve the programs list
+                List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
+                if (programs == null) {
+                    return 0; // Return 0 if no programs found
+                }
+
+                // Count completed programs
+                int completedCount = 0;
+                for (Map<String, Object> program : programs) {
+                    if ("completed".equalsIgnoreCase((String) program.get("status"))) {
+                        completedCount++;
+                    }
+                }
+                return completedCount;
+            } catch (Exception e) {
+                System.err.println("Error fetching completed programs count: " + e.getMessage());
+                return 0; // Return 0 in case of an exception
+            }
+        }
+
+    public String deactivatePlan(String selectedPlanType, String selectedUserType) {
+        Map<String, Object> data;
+        try {
+            // Load JSON data
+            data = JsonFileHandler.loadJsonData();
+            if (data == null) {
+                return "Error: Data could not be loaded.";
+            }
+
+            // Retrieve the subscriptions table
+            List<Map<String, Object>> subscriptions = (List<Map<String, Object>>) data.get("subscriptions");
+            if (subscriptions == null) {
+                return "Error: No subscriptions found.";
+            }
+
+            // Find and deactivate the plan
+            for (Map<String, Object> subscription : subscriptions) {
+                String userType = (String) subscription.get("userType");
+                String planType = (String) subscription.get("planType");
+                if (userType.equals(selectedUserType) && planType.equals(selectedPlanType)) {
+                    subscription.put("status", "inactive"); // Deactivate the plan
+                    // Save updated data to JSON file
+                    JsonFileHandler.saveJsonData(data);
+                    return "The " + selectedPlanType + " subscription plan for " + selectedUserType + " has been deactivated successfully.";
+                }
+            }
+            return "Plan not found for the specified user type.";
+        } catch (IOException e) {
+            return "Error deactivating plan: " + e.getMessage();
+        }
+    }
+
+    public String activatePlan(String selectedPlanType, String selectedUserType) {
+        Map<String, Object> data;
+        try {
+            // Load JSON data
+            data = JsonFileHandler.loadJsonData();
+            if (data == null) {
+                return "Error: Data could not be loaded.";
+            }
+
+            // Retrieve the subscriptions table
+            List<Map<String, Object>> subscriptions = (List<Map<String, Object>>) data.get("subscriptions");
+            if (subscriptions == null) {
+                return "Error: No subscriptions found.";
+            }
+
+            // Find and activate the plan
+            for (Map<String, Object> subscription : subscriptions) {
+                String userType = (String) subscription.get("userType");
+                String planType = (String) subscription.get("planType");
+                if (userType.equals(selectedUserType) && planType.equals(selectedPlanType)) {
+                    subscription.put("status", "active"); // Activate the plan
+                    // Save updated data to JSON file
+                    JsonFileHandler.saveJsonData(data);
+                    return "The " + selectedPlanType + " subscription plan for " + selectedUserType + " has been activated successfully.";
+                }
+            }
+            return "Plan not found for the specified user type.";
+        } catch (IOException e) {
+            return "Error activating plan: " + e.getMessage();
+        }
+    }
+
+    public String getPlanStatus(String planType, String userType) {
+        Map<String, Object> data;
+        try {
+            // Load JSON data
+            data = JsonFileHandler.loadJsonData();
+            if (data == null) {
+                return "Error: Data could not be loaded.";
+            }
+
+            // Retrieve the subscriptions table
+            List<Map<String, Object>> subscriptions = (List<Map<String, Object>>) data.get("subscriptions");
+            if (subscriptions == null) {
+                return "Error: No subscriptions found.";
+            }
+
+            // Check the status of the selected plan
+            for (Map<String, Object> subscription : subscriptions) {
+                String userTypeFromData = (String) subscription.get("userType");
+                String planTypeFromData = (String) subscription.get("planType");
+
+                // Ensure the comparison is case-insensitive
+                if (userTypeFromData != null && planTypeFromData != null &&
+                        userTypeFromData.equalsIgnoreCase(userType) && planTypeFromData.equalsIgnoreCase(planType)) {
+
+                    // Check if the status exists and return it
+                    Object status = subscription.get("status");
+                    if (status != null) {
+                        return (String) status;
+                    } else {
+                        return "Error: Status field is missing for the selected plan.";
+                    }
+                }
+            }
+
+            return "Plan not found for the specified user type and plan type.";
+        } catch (IOException e) {
+            return "Error getting plan status: " + e.getMessage();
         }
     }
 
 
 }
+
+
+

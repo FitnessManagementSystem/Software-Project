@@ -25,20 +25,26 @@ public class AdminContentManagementStepDefinitions {
         logger.info("Navigated to the Content Management section.");
     }
 
-    @And("I {string} a {string}")
-    public void iApproveOrDeny(String actionType, String contentType) {
-        // Call the approveContent method from adminService to approve or reject the content
-        feedbackMessage = adminService.approveContent(contentType, actionType);  // The feedback message is returned from the service
-        logger.info("Performed action: " + actionType + " on content: " + contentType);
+    @And("I handle feedback from {string} to {string}")
+    public void iHandleFeedbackFromTo(String instructorName, String clientName) {
+        // Call the handleFeedback method to handle the feedback from the instructor to the client
+        feedbackMessage = adminService.handleFeedback(instructorName, clientName);
+        logger.info("Handled feedback from " + instructorName + " to " + clientName);
     }
 
-    @Then("the content should be {string}")
-    public void theContentShouldBe(String expectedMessage) {
-        // Validate that the feedback message matches the expected message
-        Assert.assertEquals("Feedback message did not match expected", expectedMessage, feedbackMessage);
-        // Log the outcome for visibility
-        logger.info("Feedback message matched expected: " + expectedMessage);
-    }
+    @Then("I should set status to {string} with the success message {string}")
+    public void iShouldSeeStatusMarkedAsWithTheSuccessMessage(String expectedStatus, String expectedMessage) {
+        // Retrieve the status from the feedback message returned by the service
+        String feedbackStatus = feedbackMessage.contains("handled") ? "handled" : "not handled";
 
+        // Assert that the feedback status matches the expected status
+        Assert.assertEquals("The feedback status should be marked as handled.", expectedStatus, feedbackStatus);
+
+        // Assert that the success message matches the expected message
+        Assert.assertEquals("The success message should be correct.", expectedMessage, feedbackMessage);
+    }
 
 }
+
+
+

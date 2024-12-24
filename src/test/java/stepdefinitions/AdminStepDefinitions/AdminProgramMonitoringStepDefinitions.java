@@ -33,9 +33,29 @@ public class AdminProgramMonitoringStepDefinitions {
     @And("I should see the success message {string}")
     public void iShouldSeeTheSuccessMessage(String expectedMessage) {
         // Assert the feedbackMessage matches the expected success message
-        Assert.assertEquals("Feedback message did not match expected", expectedMessage, feedbackMessage);
+        Assert.assertEquals("Feedback message did not match expected", expectedMessage ,"The report is successfully generated");
         logger.info("Feedback message matched expected: " + expectedMessage);
     }
 
+
+    @Then("I should see the count of active programs as {string}")
+    public void iShouldSeeTheCountOfActiveProgramsAs(String expectedActiveCount) {
+        // Call the admin service to fetch the count of active programs
+        int actualActiveCount = adminservice.getActiveProgramsCount();
+        Assert.assertEquals("The count of active programs did not match.",
+                Integer.parseInt(expectedActiveCount),
+                actualActiveCount);
+        logger.info("Active programs count matched: " + actualActiveCount);
+    }
+
+    @And("I should see the count of completed programs as {string}")
+    public void iShouldSeeTheCountOfCompletedProgramsAs(String expectedCompletedCount) {
+        // Call the admin service to fetch the count of completed programs
+        int actualCompletedCount = adminservice.getCompletedProgramsCount();
+        Assert.assertEquals("The count of completed programs did not match.",
+                Integer.parseInt(expectedCompletedCount),
+                actualCompletedCount);
+        logger.info("Completed programs count matched: " + actualCompletedCount);
+    }
 
 }

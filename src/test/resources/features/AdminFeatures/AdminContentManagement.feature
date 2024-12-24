@@ -1,23 +1,16 @@
-Feature: Admin Content Management
+Feature: Content Management
 
   Background:
     Given I am logged in as an Admin user
 
-  Scenario Outline: Approve or reject content
+  Scenario Outline: Handle user feedback and complaints
     When I navigate to the Content Management section
-    And I "<Approval Action>" a "<Content Type>"
-    Then the content should be "<Status>"
+    And I handle feedback from "<Instructor>" to "<Client>"
+    Then I should set status to "<Status>" with the success message "<SuccessMessage>"
 
     Examples:
-      | Approval Action | Content Type     | Status   |
-      | approve         | wellness article | approved |
-      | approve         | health tip       | approved |
-      | approve         | recipe           | approved |
-      | reject          | wellness article | rejected |
-      | reject          | health tip       | rejected |
-      | reject          | recipe           | rejected |
+      | Instructor  | Client  | SuccessMessage                                             | Status      |
+      | Instructor1 | Client1 | Feedback from Instructor1 to Client1 handled successfully! | handled     |
+      | Instructor2 | Client2 | Feedback from Instructor2 to Client2 handled successfully! | handled     |
 
-  Scenario: Handle user feedback and complaints
-    When I navigate to the Content Management section
-    And I handle user complaints
-    Then I should see the complaints are marked as resolved
+

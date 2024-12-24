@@ -5,16 +5,20 @@ Feature: Admin Subscription Management
 
   Scenario Outline: Manage subscription plans for instructors and clients
     When I navigate to the Subscription Management section
-    And I "<Action>" the "<Subscription Plan>" plan for "<User Type>"
-    Then the plan status should be "<Status>"
+    And I have selected the "<planType>" subscription plan for "<userType>"
+    When I "<action>" the plan
+    Then The "<planType>" subscription plan for "<userType>" should be marked as "<status>"
+    And I should see a success message: "<successMessage>"
 
     Examples:
-      | Action     | Subscription Plan | User Type  | Status      |
-      | activate   | Basic             | instructor | active      |
-      | activate   | Premium           | instructor | active      |
-      | deactivate | Basic             | instructor | deactivated |
-      | deactivate | Premium           | instructor | deactivated |
-      | activate   | Basic             | client     | active      |
-      | activate   | Premium           | client     | active      |
-      | deactivate | Basic             | client     | deactivated |
-      | deactivate | Premium           | client     | deactivated |
+      | userType    | planType | action     | status   | successMessage                                                                   |
+      | Client1     | Basic    | activate   | active   | The Basic subscription plan for Client1 has been activated successfully.         |
+      | Client2     | Premium  | activate   | active   | The Premium subscription plan for Client2 has been activated successfully.       |
+      | Instructor1 | Basic    | activate   | active   | The Basic subscription plan for Instructor1 has been activated successfully.     |
+      | Instructor2 | Premium  | activate   | active   | The Premium subscription plan for Instructor2 has been activated successfully.   |
+      | Client1     | Basic    | deactivate | inactive | The Basic subscription plan for Client1 has been deactivated successfully.       |
+      | Client2     | Premium  | deactivate | inactive | The Premium subscription plan for Client2 has been deactivated successfully.     |
+      | Instructor1 | Basic    | deactivate | inactive | The Basic subscription plan for Instructor1 has been deactivated successfully.   |
+      | Instructor2 | Premium  | deactivate | inactive | The Premium subscription plan for Instructor2 has been deactivated successfully. |
+
+
