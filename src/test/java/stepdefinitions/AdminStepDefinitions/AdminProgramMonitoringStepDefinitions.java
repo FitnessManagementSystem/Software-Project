@@ -33,7 +33,7 @@ public class AdminProgramMonitoringStepDefinitions {
     @And("I should see the success message {string}")
     public void iShouldSeeTheSuccessMessage(String expectedMessage) {
         // Assert the feedbackMessage matches the expected success message
-        Assert.assertEquals("Feedback message did not match expected", expectedMessage ,"The report is successfully generated");
+        Assert.assertEquals("Feedback message did not match expected", expectedMessage, "The report is successfully generated");
         logger.info("Feedback message matched expected: " + expectedMessage);
     }
 

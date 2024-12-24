@@ -5,12 +5,12 @@ Feature: Rate and review completed programs
     And I have completed the program
 
   Scenario Outline: Rate and review completed programs
-    When I want to rate and review the program "<Program Name>" with rating "<Program Rate>" and review "<Review>"
-    Then I should see a message "<Submission Message>"
+    When I want to rate and review the program "<Program Name>" with rating "<Program Rate>" and review "<Review Message>"
+    Then I should see a message "<Status Message>"
 
     Examples:
 
-      | Program Name    | Program Rate | Review               | Submission Message                          |
+      | Program Name    | Program Rate | Review Message       | Status Message                              |
       | Weight Loss     | 9            | It was so good       | Program does not exist or is not completed. |
       | Flexibility     | 10           | Life-changing        | Review submitted successfully               |
       | Yoga            | 0            | What is this         | Invalid rating. Please try again.           |
