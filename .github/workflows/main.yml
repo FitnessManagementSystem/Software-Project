@@ -36,4 +36,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report -Dsonar.exclusions=**/edu/najah/app/**,**/edu/najah/menus/** -Dsonar.projectKey=FitnessManagementSystem_Software-Project
       - name: Step 4 -run test cases
-        run: mvn -Dtest="edu.najah.TestRunners.**" test
+        run: mvn test
