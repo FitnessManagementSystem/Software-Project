@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class InstructorClientInteraction {
@@ -21,20 +22,20 @@ public class InstructorClientInteraction {
     }
 
     @When("the instructor sends a report {string} to the client")
-    public void theInstructorSendsAReportToTheClient(String report) {
-        feedbackMessage = instructorService.sendReport(report);
+    public void theInstructorSendsAReportToTheClient (String report) throws IOException {
+        feedbackMessage = instructorService.sendReport (report);
 
     }
 
     @When("the instructor sends a message {string} to the client")
-    public void theInstructorSendsAMessageToTheClient(String message) {
+    public void theInstructorSendsAMessageToTheClient (String message) throws IOException{
         feedbackMessage = instructorService.sendMessage(message);
 
     }
 
 
     @Then("I should see a report {string}")
-    public void iShouldSeeAReport(String reportMessage) {
+    public void iShouldSeeAReport(String reportMessage) throws IOException {
         Assert.assertEquals("Feedback message did not match expected", reportMessage, feedbackMessage);
         logger.info("Feedback message matched expected: " + reportMessage);
     }
@@ -47,7 +48,7 @@ public class InstructorClientInteraction {
 
 
     @When("the instructor sends a feedback {string} to the client")
-    public void theInstructorSendsAFeedbackToTheClient(String feedback) {
+    public void theInstructorSendsAFeedbackToTheClient(String feedback) throws IOException {
         feedbackMessage = instructorService.sendFeedback(feedback);
 
     }
