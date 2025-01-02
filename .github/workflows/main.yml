@@ -19,7 +19,7 @@ jobs:
           java-version: 17
           distribution: 'zulu' # Alternative distribution options are available.
       - name: Step 4 -run test cases
-        run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
+        run: mvn --batch-mode -Dmaven.test.failure.ignore=true -Dtest="edu.najah.TestRunners.**" test
       - name: Cache SonarQube packages
         uses: actions/cache@v4
         with:
