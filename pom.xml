@@ -165,9 +165,6 @@
                         <argLine>
                             -javaagent:${settings.localRepository}/org/mockito/mockito-core/5.14.2/mockito-core-5.14.2.jar
                         </argLine>
-                        <includes>
-                            <include>**/edu.najah.TestRunners</include>
-                        </includes>
                     </configuration>
                 </plugin>
                 <plugin>
