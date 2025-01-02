@@ -15,8 +15,7 @@ Feature: Instructor Program Management
       | Weight Loss Program | Slim & Fit          | 30 Days  | 30             | Beginner         | Easy                   | 50    | 50 USD      | Program created successfully!         |
       | Muscle Building     | Strength Master     | 60 Days  | 60             | Intermediate     | Moderate               | 100   | 100 USD     | Program created successfully!         |
       | Weight Loss Program | Slim & Fit          | 14 Days  | 14             | Beginner         | Easy                   | 25    | 25 USD      | Program already exists for this title |
-      | Muscle Building     |                     | 90 Days  | 90             | Advanced         | Hard                   | 120   | 120 USD     | Title is empty                        |
-
+      |                     |                     | 90 Days  | 90             | Advanced         | Hard                   | 120   | 120 USD     | Title is empty                        |
 
   Scenario Outline: delete fitnes program
     When I enter the Program_title "<Program_title>" to "<Program_title_Value>"

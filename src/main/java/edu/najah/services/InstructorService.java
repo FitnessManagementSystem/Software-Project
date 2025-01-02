@@ -3,8 +3,6 @@ package edu.najah.services;
 import edu.najah.utilities.JsonFileHandler;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -16,9 +14,6 @@ public class InstructorService {
     private String difficultyLevel;
     private Integer price;
 
-    public static String getCurrentDate() {
-        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    }
 
     public String getDuration() {
         return duration;
@@ -53,7 +48,7 @@ public class InstructorService {
     }
 
     public String createProgram(String title, String duration, String difficulty, String price) {
-        if (title == null || title.trim().isEmpty()) //cover
+        if (title.trim().isEmpty())
             return "Title is empty";
 
         try {
@@ -80,7 +75,7 @@ public class InstructorService {
             data.put("programs", programs);
 
             JsonFileHandler.saveJsonData(data);
-            return  "Program created successfully!";
+            return "Program created successfully!";
         } catch (IOException e) {
             logger.severe("Error saving program: " + title + " - " + e.getMessage());
             return "Error saving program: " + title + " - " + e.getMessage();
@@ -88,7 +83,7 @@ public class InstructorService {
     }
 
     public String deleteProgram(String title) {
-        if (title == null || title.trim().isEmpty())
+        if (title.trim().isEmpty())
             return "Title is empty";
 
         try {
@@ -96,7 +91,7 @@ public class InstructorService {
             if (data == null) return "No data found";
 
             List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
-            if (programs == null || programs.isEmpty())
+            if (programs.isEmpty())
                 return "Program does not exist";
 
             boolean removed = programs.removeIf(program -> title.equalsIgnoreCase(((String) program.get("title")).trim()));
@@ -123,7 +118,7 @@ public class InstructorService {
     }
 
     private String sendGenericMessage(String key, String body, String type, String bodyKey) {
-        if (body == null || body.trim().isEmpty()) //cover
+        if (body.trim().isEmpty()) //cover
             return type + " is empty";
 
         try {
