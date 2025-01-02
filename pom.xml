@@ -171,10 +171,10 @@
                         <argLine>
                             -javaagent:${settings.localRepository}/org/mockito/mockito-core/5.14.2/mockito-core-5.14.2.jar
                         </argLine>
-                    <testFailureIgnore>false</testFailureIgnore>
-                    <reportFormat>xml</reportFormat> <!-- Ensure XML reports are generated -->
-                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory> <!-- Path to the reports -->
-            </configuration>
+                        <testFailureIgnore>false</testFailureIgnore>
+                        <reportFormat>xml</reportFormat> <!-- Ensure XML reports are generated -->
+                        <reportsDirectory>${project.build.directory}/surefire-reports
+                        </reportsDirectory> <!-- Path to the reports -->
                     </configuration>
                 </plugin>
                 <plugin>
@@ -187,7 +187,7 @@
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
-                           <phase>test</phase> <!-- Ensure agent is attached during the test phase -->
+                            <phase>test</phase> <!-- Ensure agent is attached during the test phase -->
                         </execution>
                         <!-- Ensures that the code coverage report is created after all tests have been run -->
                         <execution>
