@@ -37,6 +37,5 @@ jobs:
         run: mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report \
           -Dsonar.exclusions=**/edu/najah/app/**,**/edu/najah/menus/** \
           -Dsonar.projectKey=FitnessManagementSystem_Software-Project \
-          -Dsonar.organization=fitnessmanagementsystem
       - name: Step 4 -run test cases
         run: mvn --batch-mode -Dmaven.test.failure.ignore=true -Dtest="edu.najah.TestRunners" test
