@@ -177,10 +177,6 @@
                         <argLine>
                             -javaagent:${settings.localRepository}/org/mockito/mockito-core/5.14.2/mockito-core-5.14.2.jar
                         </argLine>
-                        <testFailureIgnore>false</testFailureIgnore>
-                        <reportFormat>xml</reportFormat> <!-- Ensure XML reports are generated -->
-                        <reportsDirectory>${project.build.directory}/surefire-reports
-                        </reportsDirectory> <!-- Path to the reports -->
                     </configuration>
                 </plugin>
                 <plugin>
@@ -191,7 +187,6 @@
                         <!-- Prepares the property pointing to the JaCoCo runtime agent -->
                         <execution>
                             <id>prepare-agent</id>
-                            <phase>initialize</phase>
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
