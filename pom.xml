@@ -183,6 +183,7 @@
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
+                           <phase>test</phase> <!-- Ensure agent is attached during the test phase -->
                         </execution>
                         <!-- Ensures that the code coverage report is created after all tests have been run -->
                         <execution>
