@@ -181,7 +181,7 @@
                         <!-- Ensures that the code coverage report is created after all tests have been run -->
                         <execution>
                             <id>generate-report</id>
-                            <phase>test</phase>
+                            <phase>verify</phase>
                             <goals>
                                 <goal>report</goal>
                             </goals>
