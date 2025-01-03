@@ -9,9 +9,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * Service class for managing clients, programs, and related operations.
+ */
+
 public class ClientService {
     private static final Logger logger = Logger.getLogger(ClientService.class.getName());
 
+    /**
+     * Creates a new user profile.
+     *
+     * @param name               The name of the user.
+     * @param dietaryPreference  The dietary preference of the user.
+     * @param dietaryRestriction The dietary restriction of the user.
+     * @param age                The age of the user.
+     * @param fitnessGoal        The fitness goal of the user.
+     * @return A message indicating the outcome of the operation.
+     */
     public String createUserProfile(String name, String dietaryPreference, String dietaryRestriction, int age, String fitnessGoal) {
         if (name.isEmpty()) {
             return "Name is empty";
@@ -36,6 +50,12 @@ public class ClientService {
         }
     }
 
+    /**
+     * Searches programs by a specific filter type.
+     *
+     * @param filterType The filter type to apply.
+     * @return A list of matching programs for the specified filter type.
+     */
     public List<Map<String, Object>> searchProgramsByFilter(String filterType) {
         List<Map<String, Object>> matchingPrograms = new ArrayList<>();
 
@@ -55,6 +75,13 @@ public class ClientService {
         return matchingPrograms;
     }
 
+    /**
+     * Enrolls a user in a program.
+     *
+     * @param programName The name of the program to enroll in.
+     * @param userName    The name of the user enrolling in the program.
+     * @return A message indicating the outcome of the enrollment.
+     */
     public String enrollInProgram(String programName, String userName) {
         try {
             Map<String, Object> data = loadData();
@@ -85,6 +112,12 @@ public class ClientService {
         }
     }
 
+    /**
+     * Retrieves a list of completed programs for a specific user.
+     *
+     * @param userName The name of the user.
+     * @return A list of completed programs.
+     */
     public List<Map<String, Object>> getCompletedProgramsList(String userName) {
         try {
             Map<String, Object> data = loadData();
@@ -129,7 +162,15 @@ public class ClientService {
         }
     }
 
-
+    /**
+     * Submits a review for a program.
+     *
+     * @param programName The name of the program being reviewed.
+     * @param userName    The name of the user submitting the review.
+     * @param rating      The rating provided for the program.
+     * @param review      The review text.
+     * @return A message indicating the outcome of the review submission.
+     */
     public String reviewProgram(String programName, String userName, String rating, String review) {
         if (isInvalidRating(rating)) {
             return "Invalid rating. Please try again.";
@@ -159,10 +200,21 @@ public class ClientService {
         }
     }
 
+    /**
+     * Loads data from the JSON file.
+     *
+     * @return A map containing the loaded data.
+     * @throws IOException If an error occurs while loading the data.
+     */
     private Map<String, Object> loadData() throws IOException {
         return JsonFileHandler.loadJsonData();
     }
 
+    /**
+     * Saves data to the JSON file.
+     *
+     * @param data The data to save.
+     */
     private void saveData(Map<String, Object> data) {
         try {
             JsonFileHandler.saveJsonData(data);
@@ -171,22 +223,56 @@ public class ClientService {
         }
     }
 
+    /**
+     * Retrieves user profiles from the data map.
+     *
+     * @param data The data map.
+     * @return A map of user profiles.
+     */
     private Map<String, Map<String, String>> getUserProfiles(Map<String, Object> data) {
         return (Map<String, Map<String, String>>) data.getOrDefault("userProfiles", new HashMap<>());
     }
 
+    /**
+     * Retrieves programs from the data map.
+     *
+     * @param data The data map.
+     * @return A list of programs in the json file.
+     */
     private List<Map<String, Object>> getPrograms(Map<String, Object> data) {
         return (List<Map<String, Object>>) data.getOrDefault("programs", new ArrayList<>());
     }
 
+    /**
+     * Retrieves enrolled users from the data map.
+     *
+     * @param data The data map.
+     * @return A list of enrolled users in the json file.
+     */
     private List<Map<String, Object>> getEnrolledUsers(Map<String, Object> data) {
         return (List<Map<String, Object>>) data.getOrDefault("enrolledUsers", new ArrayList<>());
     }
 
+    /**
+     * Retrieves reviews from the data map.
+     *
+     * @param data The data map.
+     * @return A list of reviews from the json file.
+     */
     private List<Map<String, Object>> getReviews(Map<String, Object> data) {
         return (List<Map<String, Object>>) data.getOrDefault("reviews", new ArrayList<>());
     }
 
+    /**
+     * Creates a map of profile details for a user.
+     *
+     * @param name               The user's name.
+     * @param dietaryPreference  The user's dietary preference.
+     * @param dietaryRestriction The user's dietary restriction.
+     * @param age                The user's age.
+     * @param fitnessGoal        The user's fitness goal.
+     * @return A map of profile details.
+     */
     private Map<String, String> createProfileDetails(String name, String dietaryPreference, String dietaryRestriction, int age, String fitnessGoal) {
         Map<String, String> profileDetails = new HashMap<>();
         profileDetails.put("name", name);
@@ -197,11 +283,26 @@ public class ClientService {
         return profileDetails;
     }
 
+    /**
+     * Checks if a user exists in the data map.
+     *
+     * @param data     The data map.
+     * @param userName The name of the user to check.
+     * @return True if the user exists, false otherwise.
+     */
     private boolean isUserExists(Map<String, Object> data, String userName) {
         Map<String, Object> users = (Map<String, Object>) data.get("users");
         return users.containsKey(userName);
     }
 
+    /**
+     * Checks if a user is enrolled in a specific program.
+     *
+     * @param data        The data map.
+     * @param userName    The user's name.
+     * @param programName The program's name.
+     * @return True if the user is enrolled in the program, false otherwise.
+     */
     private boolean isUserEnrolledInProgram(Map<String, Object> data, String userName, String programName) {
         List<Map<String, Object>> enrolledUsers = getEnrolledUsers(data);
         for (Map<String, Object> enrollment : enrolledUsers) {
@@ -212,6 +313,13 @@ public class ClientService {
         return false;
     }
 
+    /**
+     * Retrieves the ID of a program based on its name.
+     *
+     * @param data        The data map.
+     * @param programName The name of the program.
+     * @return The program ID, or null if not found, or -1 if the program is completed.
+     */
     private Integer getProgramId(Map<String, Object> data, String programName) {
         List<Map<String, Object>> programs = getPrograms(data);
         for (Map<String, Object> program : programs) {
@@ -225,6 +333,14 @@ public class ClientService {
         return null;
     }
 
+    /**
+     * Enrolls a user in a program.
+     *
+     * @param data        The data map.
+     * @param userName    The user's name.
+     * @param programName The program's name.
+     * @param programId   The program ID.
+     */
     private void enrollUserInProgram(Map<String, Object> data, String userName, String programName, Integer programId) {
         List<Map<String, Object>> enrolledUsers = getEnrolledUsers(data);
         Map<String, Object> userEnrollment = new HashMap<>();
@@ -234,16 +350,34 @@ public class ClientService {
         enrolledUsers.add(userEnrollment);
     }
 
-
+    /**
+     * Validates the rating input.
+     *
+     * @param rating The rating input.
+     * @return True if the rating is invalid, false otherwise.
+     */
     private boolean isInvalidRating(String rating) {
         int rate = Integer.parseInt(rating);
         return rate <= 0 || rate > 10;
     }
 
+    /**
+     * Validates the review input.
+     *
+     * @param review The review input.
+     * @return True if the review is invalid, false otherwise.
+     */
     private boolean isInvalidReview(String review) {
         return review == null || review.trim().isEmpty();
     }
 
+    /**
+     * Finds the ID of a completed program by its name.
+     *
+     * @param programs    The list of programs.
+     * @param programName The name of the program.
+     * @return The program ID, or -1 if not found.
+     */
     private int findProgramId(List<Map<String, Object>> programs, String programName) {
         for (Map<String, Object> program : programs) {
             if (programName.equals(program.get("title")) && "completed".equals(program.get("status"))) {
@@ -253,6 +387,15 @@ public class ClientService {
         return -1;
     }
 
+    /**
+     * Adds a review for a program.
+     *
+     * @param reviews   The list of reviews.
+     * @param programId The program ID.
+     * @param userName  The user's name.
+     * @param rating    The rating for the program.
+     * @param review    The review text.
+     */
     private void addReview(List<Map<String, Object>> reviews, int programId, String userName, String rating, String review) {
         Map<String, Object> newReview = new HashMap<>();
         newReview.put("programId", programId);

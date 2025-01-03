@@ -3,6 +3,9 @@ package edu.najah.app;
 import edu.najah.menus.AdminMenu;
 import edu.najah.menus.ClientMenu;
 import edu.najah.menus.InstructorMenu;
+import edu.najah.services.AdminService;
+import edu.najah.services.ClientService;
+import edu.najah.services.InstructorService;
 import edu.najah.utilities.JsonFileHandler;
 
 import javax.swing.*;
@@ -18,6 +21,9 @@ public class Main extends javax.swing.JFrame {
         LoginFrame.setVisible(true);
         LoginFrame.pack();
         LoginFrame.setLocationRelativeTo(null);
+        ClientService clientService = new ClientService();
+        AdminService adminService = new AdminService();
+        InstructorService instructorService = new InstructorService();
     }
 
     public Main() {
