@@ -38,14 +38,14 @@ public class InstructorProgramManagement {
     }
 
     @When("I save the profile")
-    public void i_save_the_profile() {
+    public void i_save_the_profile() throws Exception {
         feedbackMessage = instructorService.createProgram(instructorService.getTitle(), instructorService.getDuration(), instructorService.getDifficalty(), String.valueOf(instructorService.getPrice()));
         logger.info("Attempted to save program: " + feedbackMessage);
     }
 
 
     @And("I delete the program")
-    public void iDeleteTheProgram() {
+    public void iDeleteTheProgram()throws Exception {
         feedbackMessage = instructorService.deleteProgram(instructorService.getTitle());
         logger.info("Attempted to delete program: " + feedbackMessage);
     }
