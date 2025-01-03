@@ -124,31 +124,19 @@ public class ClientService {
             List<Map<String, Object>> programs = getPrograms(data);
             List<Map<String, Object>> enrolledUsers = getEnrolledUsers(data);
 
-            if (programs == null || programs.isEmpty()) {
+            if (programs.isEmpty()) {
                 logger.warning("No programs available");
                 return new ArrayList<>();
             }
 
-            if (enrolledUsers == null || enrolledUsers.isEmpty()) {
+            if (enrolledUsers.isEmpty()) {
                 logger.warning("No enrolled users available");
                 return new ArrayList<>();
             }
 
             List<Map<String, Object>> completedPrograms = new ArrayList<>();
 
-            for (Map<String, Object> program : programs) {
-                for (Map<String, Object> enrolledUser : enrolledUsers) {
-                    if (program.get("id").equals(enrolledUser.get("programId"))) {
-                        if ("active".equals(program.get("status"))) {
-                            logger.warning("Program is still active");
-                            continue;
-                        }
-                        if (enrolledUser.get("userName").equals(userName)) {
-                            completedPrograms.add(program);
-                        }
-                    }
-                }
-            }
+            getCompletedPrograms(userName, programs, enrolledUsers, completedPrograms);
 
             if (completedPrograms.isEmpty()) {
                 logger.warning("User has no completed programs");
@@ -159,6 +147,22 @@ public class ClientService {
         } catch (IOException e) {
             logger.severe("Error reading data: " + e.getMessage());
             return new ArrayList<>();
+        }
+    }
+
+    private static void getCompletedPrograms(String userName, List<Map<String, Object>> programs, List<Map<String, Object>> enrolledUsers, List<Map<String, Object>> completedPrograms) {
+        for (Map<String, Object> program : programs) {
+            for (Map<String, Object> enrolledUser : enrolledUsers) {
+                if (program.get("id").equals(enrolledUser.get("programId"))) {
+                    if ("active".equals(program.get("status"))) {
+                        logger.warning("Program is still active");
+                        continue;
+                    }
+                    if (enrolledUser.get("userName").equals(userName)) {
+                        completedPrograms.add(program);
+                    }
+                }
+            }
         }
     }
 
