@@ -14,7 +14,30 @@ import java.util.logging.Logger;
  */
 
 public class ClientService {
+    public static final String PROGRAM_ID = "programId";
+    public static final String STATUS = "status";
+    public static final String USER_NAME = "userName";
+    public static final String TITLE = "title";
+    public static final String ERROR_READING_OR_WRITING_THE_JSON_FILE = "Error reading or writing the JSON file: ";
+
+
     private static final Logger logger = Logger.getLogger(ClientService.class.getName());
+
+    private static void getCompletedPrograms(String userName, List<Map<String, Object>> programs, List<Map<String, Object>> enrolledUsers, List<Map<String, Object>> completedPrograms) {
+        for (Map<String, Object> program : programs) {
+            for (Map<String, Object> enrolledUser : enrolledUsers) {
+                if (program.get("id").equals(enrolledUser.get(PROGRAM_ID))) {
+                    if ("active".equals(program.get(STATUS))) {
+                        logger.warning("Program is still active");
+                        continue;
+                    }
+                    if (enrolledUser.get(USER_NAME).equals(userName)) {
+                        completedPrograms.add(program);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Creates a new user profile.
@@ -107,8 +130,8 @@ public class ClientService {
 
             return "Enrolled successfully";
         } catch (IOException e) {
-            logger.severe("Error reading or writing the JSON file: " + e.getMessage());
-            return "Error reading or writing the JSON file: " + e.getMessage();
+            logger.severe(ERROR_READING_OR_WRITING_THE_JSON_FILE + e.getMessage());
+            return ERROR_READING_OR_WRITING_THE_JSON_FILE + e.getMessage();
         }
     }
 
@@ -150,22 +173,6 @@ public class ClientService {
         }
     }
 
-    private static void getCompletedPrograms(String userName, List<Map<String, Object>> programs, List<Map<String, Object>> enrolledUsers, List<Map<String, Object>> completedPrograms) {
-        for (Map<String, Object> program : programs) {
-            for (Map<String, Object> enrolledUser : enrolledUsers) {
-                if (program.get("id").equals(enrolledUser.get("programId"))) {
-                    if ("active".equals(program.get("status"))) {
-                        logger.warning("Program is still active");
-                        continue;
-                    }
-                    if (enrolledUser.get("userName").equals(userName)) {
-                        completedPrograms.add(program);
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * Submits a review for a program.
      *
@@ -199,8 +206,8 @@ public class ClientService {
 
             return "Review submitted successfully";
         } catch (IOException | ClassCastException e) {
-            logger.severe("Error reading or writing the JSON file: " + e.getMessage());
-            return "Error reading or writing the JSON file: " + e.getMessage();
+            logger.severe(ERROR_READING_OR_WRITING_THE_JSON_FILE + e.getMessage());
+            return ERROR_READING_OR_WRITING_THE_JSON_FILE + e.getMessage();
         }
     }
 
@@ -310,7 +317,7 @@ public class ClientService {
     private boolean isUserEnrolledInProgram(Map<String, Object> data, String userName, String programName) {
         List<Map<String, Object>> enrolledUsers = getEnrolledUsers(data);
         for (Map<String, Object> enrollment : enrolledUsers) {
-            if (userName.equals(enrollment.get("userName")) && programName.equals(enrollment.get("programName"))) {
+            if (userName.equals(enrollment.get(USER_NAME)) && programName.equals(enrollment.get("programName"))) {
                 return true;
             }
         }
@@ -327,10 +334,10 @@ public class ClientService {
     private Integer getProgramId(Map<String, Object> data, String programName) {
         List<Map<String, Object>> programs = getPrograms(data);
         for (Map<String, Object> program : programs) {
-            if (programName.equals(program.get("title")) && "active".equals(program.get("status"))) {
+            if (programName.equals(program.get(TITLE)) && "active".equals(program.get(STATUS))) {
                 return (Integer) program.get("id");
             }
-            if (programName.equals(program.get("title")) && "completed".equals(program.get("status"))) {
+            if (programName.equals(program.get(TITLE)) && "completed".equals(program.get(STATUS))) {
                 return -1;
             }
         }
@@ -348,9 +355,9 @@ public class ClientService {
     private void enrollUserInProgram(Map<String, Object> data, String userName, String programName, Integer programId) {
         List<Map<String, Object>> enrolledUsers = getEnrolledUsers(data);
         Map<String, Object> userEnrollment = new HashMap<>();
-        userEnrollment.put("programId", programId);
+        userEnrollment.put(PROGRAM_ID, programId);
         userEnrollment.put("programName", programName);
-        userEnrollment.put("userName", userName);
+        userEnrollment.put(USER_NAME, userName);
         enrolledUsers.add(userEnrollment);
     }
 
@@ -384,7 +391,7 @@ public class ClientService {
      */
     private int findProgramId(List<Map<String, Object>> programs, String programName) {
         for (Map<String, Object> program : programs) {
-            if (programName.equals(program.get("title")) && "completed".equals(program.get("status"))) {
+            if (programName.equals(program.get(TITLE)) && "completed".equals(program.get(STATUS))) {
                 return (Integer) program.get("id");
             }
         }
@@ -402,8 +409,8 @@ public class ClientService {
      */
     private void addReview(List<Map<String, Object>> reviews, int programId, String userName, String rating, String review) {
         Map<String, Object> newReview = new HashMap<>();
-        newReview.put("programId", programId);
-        newReview.put("userName", userName);
+        newReview.put(PROGRAM_ID, programId);
+        newReview.put(USER_NAME, userName);
         newReview.put("rating", Integer.parseInt(rating));
         newReview.put("review", review);
         reviews.add(newReview);
