@@ -15,12 +15,12 @@ public class AdminUserManagementStepDefinitions {
 
     @Given("I am logged in as an Admin user")
     public void iAmLoggedInAsAnAdminUser() {
-        logger.info("I logged in as an Admin user");
     }
 
-    @When("I navigate to the User Management section")
+    @Given("I navigate to the User Management section")
     public void i_navigate_to_the_user_management_section() {
         logger.info("Navigated to the User Management section.");
+
     }
 
     @When("I {string} an account for {string} with name {string}, password {string}, and role {string}")

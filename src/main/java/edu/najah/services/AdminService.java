@@ -228,15 +228,8 @@ public class AdminService {
             data = loadData();
 
             List<Map<String, String>> feedback = (List<Map<String, String>>) data.get("feedback");
-            if (feedback == null) {
-                return "No feedback available";
-            }
 
             List<Map<String, String>> handledFeedbacks = (List<Map<String, String>>) data.get("handledFeedbacks");
-            if (handledFeedbacks == null) {
-                handledFeedbacks = new ArrayList<>();
-                data.put("handledFeedbacks", handledFeedbacks);
-            }
 
             boolean feedbackFound = false;
             Map<String, String> feedbackToHandle = null;
@@ -288,10 +281,14 @@ public class AdminService {
 
     public int getActiveProgramsCount() {
         Map<String, Object> data = loadJsonData();
-        if (data == null) return 0;
+        if (data == null) {
+            return 0;
+        }
 
         List<Map<String, Object>> programs = getProgramsList(data);
-        if (programs == null) return 0;
+        if (programs == null) {
+            return 0;
+        }
 
         int activeCount = 0;
         for (Map<String, Object> program : programs) {
@@ -320,10 +317,8 @@ public class AdminService {
 
     public String deactivatePlan(String selectedPlanType, String selectedUserType) {
         Map<String, Object> data = loadJsonData();
-        if (data == null) return "Error: Data could not be loaded.";
 
         List<Map<String, Object>> subscriptions = getSubscriptionsList(data);
-        if (subscriptions == null) return "Error: No subscriptions found.";
 
         for (Map<String, Object> subscription : subscriptions) {
             String userType = (String) subscription.get("userType");
@@ -343,10 +338,8 @@ public class AdminService {
 
     public String activatePlan(String selectedPlanType, String selectedUserType) {
         Map<String, Object> data = loadJsonData();
-        if (data == null) return "Error: Data could not be loaded.";
 
         List<Map<String, Object>> subscriptions = getSubscriptionsList(data);
-        if (subscriptions == null) return "Error: No subscriptions found.";
 
         for (Map<String, Object> subscription : subscriptions) {
             String userType = (String) subscription.get("userType");
