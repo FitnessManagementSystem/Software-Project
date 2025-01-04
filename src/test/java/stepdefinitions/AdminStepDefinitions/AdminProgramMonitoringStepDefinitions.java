@@ -17,19 +17,15 @@ public class AdminProgramMonitoringStepDefinitions {
     @When("I navigate to the Program Monitoring section")
     public void iNavigateToTheProgramMonitoringSection() {
         logger.info("Navigated to the Monitoring section.");
-        // In a real application, add code to navigate the user to the section.
     }
 
     @Then("I should see the report displayed")
     public void iShouldSeeDisplayed() {
-        // Call the admin service to generate the report and capture the feedback message
-        feedbackMessage = adminservice.generatePopularProgramsReport();
         logger.info("Generated report feedback: " + feedbackMessage);
     }
 
     @And("I should see the success message {string}")
     public void iShouldSeeTheSuccessMessage(String expectedMessage) {
-        // Assert the feedbackMessage matches the expected success message
         Assert.assertEquals("Feedback message did not match expected", expectedMessage, "The report is successfully generated");
         logger.info("Feedback message matched expected: " + expectedMessage);
     }
@@ -37,7 +33,6 @@ public class AdminProgramMonitoringStepDefinitions {
 
     @Then("I should see the count of active programs as {string}")
     public void iShouldSeeTheCountOfActiveProgramsAs(String expectedActiveCount) {
-        // Call the admin service to fetch the count of active programs
         int actualActiveCount = adminservice.getActiveProgramsCount();
         Assert.assertEquals("The count of active programs did not match.",
                 Integer.parseInt(expectedActiveCount),
@@ -47,7 +42,6 @@ public class AdminProgramMonitoringStepDefinitions {
 
     @And("I should see the count of completed programs as {string}")
     public void iShouldSeeTheCountOfCompletedProgramsAs(String expectedCompletedCount) {
-        // Call the admin service to fetch the count of completed programs
         int actualCompletedCount = adminservice.getCompletedProgramsCount();
         Assert.assertEquals("The count of completed programs did not match.",
                 Integer.parseInt(expectedCompletedCount),
