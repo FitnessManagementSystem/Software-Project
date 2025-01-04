@@ -1,23 +1,58 @@
 package stepdefinitions.AdminStepDefinitions;
 
 import edu.najah.services.AdminService;
+import edu.najah.utilities.JsonFileHandler;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.mockito.Mockito;
+import stepdefinitions.ClientStepDefinitions.BaseSteps;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
-public class AdminSubscriptionManagementStepDefinitions {
+public class AdminSubscriptionManagementStepDefinitions extends BaseSteps {
     private static final Logger logger = Logger.getLogger(AdminSubscriptionManagementStepDefinitions.class.getName());
     private final AdminService adminService = new AdminService();
     private String feedbackMessage;
     private String selectedPlanType;
     private String selectedUserType;
 
-    @When("I navigate to the Subscription Management section")
+    @Given("I navigate to the Subscription management section")
     public void iNavigateToTheSubscriptionManagementSection() {
         logger.info("Navigated to the Subscription Management section.");
+        Map<String, Object> mockData = new HashMap<>();
+        List<Map<String, Object>> subscriptions = new ArrayList<>();
+
+        subscriptions.add(new HashMap<String, Object>() {{
+            put("userType", "Instructor1");
+            put("planType", "Basic");
+            put("status", "active");
+        }});
+        subscriptions.add(new HashMap<String, Object>() {{
+            put("userType", "Instructor2");
+            put("planType", "Premium");
+            put("status", "inactive");
+        }});
+        subscriptions.add(new HashMap<String, Object>() {{
+            put("userType", "Client1");
+            put("planType", "Basic");
+            put("status", "active");
+        }});
+        subscriptions.add(new HashMap<String, Object>() {{
+            put("userType", "Client2");
+            put("planType", "Premium");
+            put("status", "inactive");
+        }});
+        mockData.put("subscriptions", subscriptions);
+
+        mockedFileHandler.when(JsonFileHandler::loadJsonData).thenReturn(mockData);
+        mockedFileHandler.when(() -> JsonFileHandler.saveJsonData(Mockito.anyMap())).thenAnswer(invocation -> null);
     }
 
     @And("I have selected the {string} subscription plan for {string}")
