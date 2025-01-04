@@ -14,8 +14,9 @@ import java.util.logging.Logger;
  * and sending reports, messages, or feedback.
  */
 public class InstructorService {
+    public static final String PROGRAMS = "programs";
+    public static final String TITLE = "title";
     private static final Logger logger = Logger.getLogger(InstructorService.class.getName());
-
     private String programTitle;
     private String duration;
     private String difficultyLevel;
@@ -108,10 +109,10 @@ public class InstructorService {
 
         try {
             Map<String, Object> data = JsonFileHandler.loadJsonData();
-            List<Map<String, Object>> programs = (List<Map<String, Object>>) data.getOrDefault("programs", new ArrayList<>());
+            List<Map<String, Object>> programs = (List<Map<String, Object>>) data.getOrDefault(PROGRAMS, new ArrayList<>());
 
             for (Map<String, Object> program : programs) {
-                if (title.equals(program.get("title"))) return "Program already exists for this title";
+                if (title.equals(program.get(TITLE))) return "Program already exists for this title";
             }
 
             int newId = programs.stream()
@@ -121,13 +122,13 @@ public class InstructorService {
 
             Map<String, Object> newProgram = new HashMap<>();
             newProgram.put("id", newId);
-            newProgram.put("title", title);
+            newProgram.put(TITLE, title);
             newProgram.put("duration", duration);
             newProgram.put("difficulty", difficulty);
             newProgram.put("price", price);
 
             programs.add(newProgram);
-            data.put("programs", programs);
+            data.put(PROGRAMS, programs);
 
             JsonFileHandler.saveJsonData(data);
             return "Program created successfully!";
@@ -151,11 +152,11 @@ public class InstructorService {
             Map<String, Object> data = JsonFileHandler.loadJsonData();
             if (data == null) return "No data found";
 
-            List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get("programs");
+            List<Map<String, Object>> programs = (List<Map<String, Object>>) data.get(PROGRAMS);
             if (programs.isEmpty())
                 return "Program does not exist";
 
-            boolean removed = programs.removeIf(program -> title.equalsIgnoreCase(((String) program.get("title")).trim()));
+            boolean removed = programs.removeIf(program -> title.equalsIgnoreCase(((String) program.get(TITLE)).trim()));
             if (!removed) return "Program does not exist";
 
             JsonFileHandler.saveJsonData(data);
