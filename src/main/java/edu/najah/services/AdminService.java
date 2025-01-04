@@ -3,17 +3,18 @@ package edu.najah.services;
 import edu.najah.utilities.JsonFileHandler;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class AdminService {
     public static final String STATUS = "status";
     public static final String INSTRUCTOR = "instructor";
-    private static final Logger logger = Logger.getLogger(ClientService.class.getName());
+    public static final String ACTIVE = "active";
+    public static final String USER_TYPE = "userType";
+    public static final String PLAN_TYPE = "planType";
+    public static final String USERS = "users";
+    public static final String INSTRUCTORS_AWAITING_APPROVAL = "instructorsAwaitingApproval";
+    private static final Logger logger = Logger.getLogger(AdminService.class.getName());
 
     public String addInstructor(String name, String password, String role) {
         if (name.isEmpty()) {
@@ -28,7 +29,7 @@ public class AdminService {
 
         try {
             Map<String, Object> data = loadData();
-            List<Map<String, Object>> instructorsAwaitingApproval = getListFromData(data, "instructorsAwaitingApproval");
+            List<Map<String, Object>> instructorsAwaitingApproval = getListFromData(data, INSTRUCTORS_AWAITING_APPROVAL);
 
             if (isInstructorExists(instructorsAwaitingApproval, name)) {
                 return "Account for instructor already exists with this name!";
@@ -57,7 +58,7 @@ public class AdminService {
 
         try {
             Map<String, Object> data = loadData();
-            List<Map<String, Object>> users = getListFromData(data, "users");
+            List<Map<String, Object>> users = getListFromData(data, USERS);
 
             if (isClientExists(users, name)) {
                 return "Account for client already exists with this name!";
@@ -76,7 +77,7 @@ public class AdminService {
     public String deactivateClient(String name) {
         try {
             Map<String, Object> data = loadData();
-            List<Map<String, Object>> users = getListFromData(data, "users");
+            List<Map<String, Object>> users = getListFromData(data, USERS);
             List<Map<String, Object>> deactivatedUsers = getListFromData(data, "deactivatedUsers");
 
             boolean userFound = deactivateUser(users, deactivatedUsers, name, "Client");
@@ -95,8 +96,8 @@ public class AdminService {
     public String deactivateInstructor(String name) {
         try {
             Map<String, Object> data = loadData();
-            List<Map<String, Object>> users = getListFromData(data, "users");
-            List<Map<String, Object>> instructorsAwaitingApproval = getListFromData(data, "instructorsAwaitingApproval");
+            List<Map<String, Object>> users = getListFromData(data, USERS);
+            List<Map<String, Object>> instructorsAwaitingApproval = getListFromData(data, INSTRUCTORS_AWAITING_APPROVAL);
             List<Map<String, Object>> deactivatedUsers = getListFromData(data, "deactivatedUsers");
 
             boolean instructorFound = deactivateUser(users, deactivatedUsers, name, "Instructor");
@@ -152,14 +153,14 @@ public class AdminService {
         user.put("name", name);
         user.put("password", password);
         user.put("role", role);
-        user.put("active", true);
+        user.put(ACTIVE, true);
         return user;
     }
 
     private boolean deactivateUser(List<Map<String, Object>> users, List<Map<String, Object>> deactivatedUsers, String name, String role) {
         for (Map<String, Object> user : users) {
             if (user.get("name").equals(name) && user.get("role").equals(role)) {
-                user.put("active", false);
+                user.put(ACTIVE, false);
                 deactivatedUsers.add(user);
                 users.remove(user);
                 return true;
@@ -177,12 +178,12 @@ public class AdminService {
         Map<String, Object> data;
         try {
             data = loadData();
-            List<Map<String, Object>> instructorsAwaitingApproval = (List<Map<String, Object>>) data.get("instructorsAwaitingApproval");
+            List<Map<String, Object>> instructorsAwaitingApproval = (List<Map<String, Object>>) data.get(INSTRUCTORS_AWAITING_APPROVAL);
 
-            List<Map<String, Object>> users = (List<Map<String, Object>>) data.get("users");
+            List<Map<String, Object>> users = (List<Map<String, Object>>) data.get(USERS);
             if (users == null) {
                 users = new ArrayList<>();
-                data.put("users", users);
+                data.put(USERS, users);
             }
 
             for (Map<String, Object> user : users) {
@@ -206,7 +207,7 @@ public class AdminService {
                 return "Instructor account not approved due to incomplete data!";
             }
 
-            instructorToApprove.put("active", true);
+            instructorToApprove.put(ACTIVE, true);
 
             users.add(instructorToApprove);
 
@@ -295,7 +296,7 @@ public class AdminService {
 
         int activeCount = 0;
         for (Map<String, Object> program : programs) {
-            if ("active".equalsIgnoreCase((String) program.get(STATUS))) {
+            if (ACTIVE.equalsIgnoreCase((String) program.get(STATUS))) {
                 activeCount++;
             }
         }
@@ -324,8 +325,8 @@ public class AdminService {
         List<Map<String, Object>> subscriptions = getSubscriptionsList(data);
 
         for (Map<String, Object> subscription : subscriptions) {
-            String userType = (String) subscription.get("userType");
-            String planType = (String) subscription.get("planType");
+            String userType = (String) subscription.get(USER_TYPE);
+            String planType = (String) subscription.get(PLAN_TYPE);
             if (userType.equals(selectedUserType) && planType.equals(selectedPlanType)) {
                 subscription.put(STATUS, "inactive");
                 try {
@@ -345,10 +346,10 @@ public class AdminService {
         List<Map<String, Object>> subscriptions = getSubscriptionsList(data);
 
         for (Map<String, Object> subscription : subscriptions) {
-            String userType = (String) subscription.get("userType");
-            String planType = (String) subscription.get("planType");
+            String userType = (String) subscription.get(USER_TYPE);
+            String planType = (String) subscription.get(PLAN_TYPE);
             if (userType.equals(selectedUserType) && planType.equals(selectedPlanType)) {
-                subscription.put(STATUS, "active");
+                subscription.put(STATUS, ACTIVE);
                 try {
                     JsonFileHandler.saveJsonData(data);
                 } catch (IOException e) {
@@ -369,8 +370,8 @@ public class AdminService {
         if (subscriptions == null) return "Error: No subscriptions found.";
 
         for (Map<String, Object> subscription : subscriptions) {
-            String userTypeFromData = (String) subscription.get("userType");
-            String planTypeFromData = (String) subscription.get("planType");
+            String userTypeFromData = (String) subscription.get(USER_TYPE);
+            String planTypeFromData = (String) subscription.get(PLAN_TYPE);
 
             if (userTypeFromData != null && planTypeFromData != null && userTypeFromData.equalsIgnoreCase(userType) && planTypeFromData.equalsIgnoreCase(planType)) {
 
