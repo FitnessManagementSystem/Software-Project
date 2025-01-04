@@ -35,8 +35,26 @@
     "price" : "$120",
     "status" : "active"
   } ],
-  "instructorsAwaitingApproval" : [ ],
-  "users" : [ ],
+  "instructorsAwaitingApproval": [
+    {
+      "password": "s111",
+      "username": "Ahmad"
+    }
+  ],
+  "users": {
+    "jaddou": {
+      "password": "s111",
+      "role": "Admin"
+    },
+    "Amjad": {
+      "password": "s122",
+      "role": "Instructor"
+    },
+    "Arqam": {
+      "password": "s123",
+      "role": "Client"
+    }
+  },
   "deactivatedUsers" : [ {
     "password" : "password123",
     "role" : "Instructor",
@@ -578,6 +596,12 @@
     "rating" : 10,
     "userName" : "Arqam",
     "programId" : 2
+  },
+    {
+      "review": "ggod",
+      "rating": 9,
+      "userName": "Arqam",
+      "programId": 2
   } ],
   "messages" : [ {
     "message_body" : "You are doing good",
@@ -592,13 +616,33 @@
     "from" : "Instructor1",
     "to" : "Client1"
   }, {
-    "report_body" : "you doing good",
+    "report_body": "amjad ssss",
     "from" : "instructor1",
     "to" : "client1"
   }, {
-    "message_body" : "you doing good",
+    "message_body": "sss",
     "from" : "instructor1",
     "to" : "client1"
+  },
+    {
+      "message_body": "Amjadssssssssssttt",
+      "from": "Amjad",
+      "to": ""
+    },
+    {
+      "message_body": "Amjad Ata Mousa",
+      "from": "Amjad",
+      "to": "Arqam"
+    },
+    {
+      "report_body": "sssssssssssssssss",
+      "from": "Amjad",
+      "to": "Arqam"
+    },
+    {
+      "message_body": "jaddou",
+      "from": "Amjad",
+      "to": "Arqam"
   } ],
   "notifications" : [ {
     "program_id" : 5,
@@ -627,7 +671,7 @@
     "userCount" : 0,
     "program" : "Yoga"
   }, {
-    "userCount" : 0,
+    "userCount": 1,
     "program" : "Boxing"
   } ],
   "feedback" : [ {
@@ -640,14 +684,6 @@
     "to" : "Client2",
     "feedback_body" : "You are doing good",
     "status" : "handled"
-  }, {
-    "from" : "instructor1",
-    "to" : "client1",
-    "feedback_body" : "you doing good"
-  }, {
-    "from" : "instructor1",
-    "to" : "client1",
-    "feedback_body" : "nice progress"
   } ],
   "handledFeedbacks" : [ ],
   "subscriptions" : [ {

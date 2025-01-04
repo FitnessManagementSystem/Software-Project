@@ -13,6 +13,7 @@ Feature: Admin Program Monitoring
 
 
   Scenario Outline: Track active and completed programs
+    Given I track the completed and active programs
     When I navigate to the Program Monitoring section
     Then I should see the count of active programs as "<activePrograms>"
     And I should see the count of completed programs as "<completedPrograms>"

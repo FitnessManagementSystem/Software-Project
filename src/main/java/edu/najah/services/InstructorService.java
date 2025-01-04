@@ -1,5 +1,6 @@
 package edu.najah.services;
 
+import edu.najah.app.Main;
 import edu.najah.utilities.JsonFileHandler;
 
 import java.io.IOException;
@@ -169,8 +170,8 @@ public class InstructorService {
      * @param reportBody the content of the report
      * @return a message indicating the success or failure of the operation
      */
-    public String sendReport(String reportBody) {
-        return sendGenericMessage("messages", reportBody, "Report", "report_body");
+    public String sendReport(String reportBody, String reciver, String sender) {
+        return sendGenericMessage("messages", reportBody, "Report", "report_body", reciver, sender);
     }
 
     /**
@@ -179,8 +180,8 @@ public class InstructorService {
      * @param messageBody the content of the message
      * @return a message indicating the success or failure of the operation
      */
-    public String sendMessage(String messageBody) {
-        return sendGenericMessage("messages", messageBody, "Message", "message_body");
+    public String sendMessage(String messageBody, String reciver, String sender) {
+        return sendGenericMessage("messages", messageBody, "Message", "message_body", reciver, sender);
     }
 
     /**
@@ -189,8 +190,8 @@ public class InstructorService {
      * @param feedbackBody the content of the feedback
      * @return a message indicating the success or failure of the operation
      */
-    public String sendFeedback(String feedbackBody) {
-        return sendGenericMessage("feedback", feedbackBody, "Feedback", "feedback_body");
+    public String sendFeedback(String feedbackBody, String reciver, String sender) {
+        return sendGenericMessage("feedback", feedbackBody, "Feedback", "feedback_body", reciver, sender);
     }
 
     /**
@@ -202,7 +203,7 @@ public class InstructorService {
      * @param bodyKey  the key used for the message content in the data map
      * @return a message indicating the success or failure of the operation
      */
-    private String sendGenericMessage(String key, String body, String type, String bodyKey) {
+    private String sendGenericMessage(String key, String body, String type, String bodyKey, String reciver, String sender) {
         if (body.trim().isEmpty())
             return type + " is empty";
 
@@ -212,7 +213,7 @@ public class InstructorService {
                 return type + " could not be sent";
 
             List<Map<String, String>> list = (List<Map<String, String>>) data.getOrDefault(key, new ArrayList<>());
-            Map<String, String> message = buildMessage(body, bodyKey);
+            Map<String, String> message = buildMessage(body, bodyKey, reciver, sender);
 
             list.add(message);
             data.put(key, list);
@@ -232,10 +233,10 @@ public class InstructorService {
      * @param bodyKey the key used for the message content in the map
      * @return a map containing the message details
      */
-    private Map<String, String> buildMessage(String body, String bodyKey) {
+    private Map<String, String> buildMessage(String body, String bodyKey, String reciver, String sender) {
         Map<String, String> message = new HashMap<>();
-        message.put("from", "instructor1");
-        message.put("to", "client1");
+        message.put("from", sender);
+        message.put("to", reciver);
         message.put(bodyKey, body);
         return message;
     }
