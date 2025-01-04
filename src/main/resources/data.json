@@ -53,6 +53,10 @@
     "Arqam": {
       "password": "s123",
       "role": "Client"
+    },
+    "SSS": {
+      "password": "SSS",
+      "role": "Client"
     }
   },
   "deactivatedUsers" : [ {
@@ -643,6 +647,11 @@
       "message_body": "jaddou",
       "from": "Amjad",
       "to": "Arqam"
+    },
+    {
+      "message_body": "Hello this is a test",
+      "from": "Amjad",
+      "to": "SSS"
   } ],
   "notifications" : [ {
     "program_id" : 5,
@@ -657,7 +666,13 @@
     "message" : "A new program has been announced! Program ID: 7",
     "timestamp" : "2024-12-22"
   } ],
-  "enrolledPrograms" : [ ],
+  "enrolledPrograms": [
+    {
+      "programName": "Weight Loss",
+      "userName": "SSS",
+      "programId": 1
+    }
+  ],
   "statisticsReports" : [ {
     "userCount" : 0,
     "program" : "Weight Loss"
@@ -718,5 +733,15 @@
     "userType" : "Instructor4",
     "planType" : "Premium",
     "status" : "active"
-  } ]
+  }
+  ],
+  "userProfiles": {
+    "SSS": {
+      "dietaryRestriction": "TEst",
+      "fitnessGoal": "Gym",
+      "name": "SSS",
+      "dietaryPreference": "Hello",
+      "age": "12"
+    }
+  }
 }

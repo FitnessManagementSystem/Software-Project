@@ -57,6 +57,9 @@ public class ClientService {
         try {
             Map<String, Object> data = loadData();
             Map<String, Map<String, String>> userProfiles = getUserProfiles(data);
+            if (userProfiles.isEmpty()) {
+                data.put("userProfiles", userProfiles);
+            }
 
             if (userProfiles.containsKey(name)) {
                 return "Profile already exists for this name";
@@ -359,6 +362,7 @@ public class ClientService {
         userEnrollment.put("programName", programName);
         userEnrollment.put(USER_NAME, userName);
         enrolledUsers.add(userEnrollment);
+        data.put("enrolledPrograms", enrolledUsers);
     }
 
     /**
