@@ -4,6 +4,7 @@ import edu.najah.utilities.JsonFileHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -166,7 +167,7 @@ public class AdminService {
     }
 
     private String handleError(String type, String name, IOException e) {
-        logger.severe("Error saving " + type + ": " + name + " - " + e.getMessage());
+        logger.severe(new StringBuilder().append("Error saving ").append(type).append(": ").append(name).append(" - ").append(e.getMessage()).toString());
         return "Error saving " + type + ": " + name + " - " + e.getMessage();
     }
 
@@ -267,7 +268,7 @@ public class AdminService {
             return data;
         } catch (IOException e) {
             logger.severe("Error loading JSON data: " + e.getMessage());
-            return null;
+            return Collections.emptyMap();
         }
     }
 
