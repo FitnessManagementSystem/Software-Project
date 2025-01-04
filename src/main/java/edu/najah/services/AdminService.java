@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class AdminService {
+    public static final String STATUS = "status";
+    public static final String INSTRUCTOR = "instructor";
     private static final Logger logger = Logger.getLogger(ClientService.class.getName());
 
     public String addInstructor(String name, String password, String role) {
@@ -38,7 +40,7 @@ public class AdminService {
             JsonFileHandler.saveJsonData(data);
             return "Instructor created successfully!";
         } catch (IOException e) {
-            return handleError("instructor", name, e);
+            return handleError(INSTRUCTOR, name, e);
         }
     }
 
@@ -110,7 +112,7 @@ public class AdminService {
             JsonFileHandler.saveJsonData(data);
             return "Account for instructor deactivated successfully!";
         } catch (IOException e) {
-            return handleError("instructor", name, e);
+            return handleError(INSTRUCTOR, name, e);
         }
     }
 
@@ -212,7 +214,7 @@ public class AdminService {
 
             return "Instructor account approved successfully!";
         } catch (IOException e) {
-            return handleError("instructor", name, e);
+            return handleError(INSTRUCTOR, name, e);
         }
     }
 
@@ -235,7 +237,7 @@ public class AdminService {
             boolean feedbackFound = false;
             Map<String, String> feedbackToHandle = null;
             for (Map<String, String> feedbackItem : feedback) {
-                feedbackItem.putIfAbsent("status", "not handled");
+                feedbackItem.putIfAbsent(STATUS, "not handled");
                 if (feedbackItem.get("from").equals(instructorName) && feedbackItem.get("to").equals(clientName)) {
                     feedbackToHandle = feedbackItem;
                     feedbackFound = true;
@@ -247,7 +249,7 @@ public class AdminService {
                 return "Specified feedback is not available";
             }
 
-            feedbackToHandle.put("status", "handled");
+            feedbackToHandle.put(STATUS, "handled");
             handledFeedbacks.add(feedbackToHandle);
             feedback.remove(feedbackToHandle);
 
@@ -293,7 +295,7 @@ public class AdminService {
 
         int activeCount = 0;
         for (Map<String, Object> program : programs) {
-            if ("active".equalsIgnoreCase((String) program.get("status"))) {
+            if ("active".equalsIgnoreCase((String) program.get(STATUS))) {
                 activeCount++;
             }
         }
@@ -309,7 +311,7 @@ public class AdminService {
 
         int completedCount = 0;
         for (Map<String, Object> program : programs) {
-            if ("completed".equalsIgnoreCase((String) program.get("status"))) {
+            if ("completed".equalsIgnoreCase((String) program.get(STATUS))) {
                 completedCount++;
             }
         }
@@ -325,7 +327,7 @@ public class AdminService {
             String userType = (String) subscription.get("userType");
             String planType = (String) subscription.get("planType");
             if (userType.equals(selectedUserType) && planType.equals(selectedPlanType)) {
-                subscription.put("status", "inactive");
+                subscription.put(STATUS, "inactive");
                 try {
                     JsonFileHandler.saveJsonData(data);
                 } catch (IOException e) {
@@ -346,7 +348,7 @@ public class AdminService {
             String userType = (String) subscription.get("userType");
             String planType = (String) subscription.get("planType");
             if (userType.equals(selectedUserType) && planType.equals(selectedPlanType)) {
-                subscription.put("status", "active");
+                subscription.put(STATUS, "active");
                 try {
                     JsonFileHandler.saveJsonData(data);
                 } catch (IOException e) {
@@ -372,7 +374,7 @@ public class AdminService {
 
             if (userTypeFromData != null && planTypeFromData != null && userTypeFromData.equalsIgnoreCase(userType) && planTypeFromData.equalsIgnoreCase(planType)) {
 
-                Object status = subscription.get("status");
+                Object status = subscription.get(STATUS);
                 if (status != null) {
                     return (String) status;
                 } else {

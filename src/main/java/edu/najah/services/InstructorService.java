@@ -1,10 +1,12 @@
 package edu.najah.services;
 
-import edu.najah.app.Main;
 import edu.najah.utilities.JsonFileHandler;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -197,10 +199,10 @@ public class InstructorService {
     /**
      * Sends a generic message.
      *
-     * @param key      the key identifying the message type
-     * @param body     the content of the message
-     * @param type     the type of message (e.g., Report, Message, Feedback)
-     * @param bodyKey  the key used for the message content in the data map
+     * @param key     the key identifying the message type
+     * @param body    the content of the message
+     * @param type    the type of message (e.g., Report, Message, Feedback)
+     * @param bodyKey the key used for the message content in the data map
      * @return a message indicating the success or failure of the operation
      */
     private String sendGenericMessage(String key, String body, String type, String bodyKey, String reciver, String sender) {
