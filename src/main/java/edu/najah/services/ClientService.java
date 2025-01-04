@@ -78,8 +78,7 @@ public class ClientService {
             }
 
             enrollUserInProgram(data, userName, programName, programId);
-            saveData(data);
-
+            JsonFileHandler.saveJsonData(data);
             return "Enrolled successfully";
         } catch (IOException e) {
             logger.severe("Error reading or writing the JSON file: " + e.getMessage());
