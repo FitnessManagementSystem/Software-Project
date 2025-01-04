@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * This class provides various administrative services related to users, instructors, plans, and subscriptions.
+ * It supports adding, deactivating, activating, and approving users and plans, as well as managing feedback and subscriptions.
+ */
 public class AdminService {
     public static final String STATUS = "status";
     public static final String INSTRUCTOR = "instructor";
@@ -16,6 +20,14 @@ public class AdminService {
     public static final String INSTRUCTORS_AWAITING_APPROVAL = "instructorsAwaitingApproval";
     private static final Logger logger = Logger.getLogger(AdminService.class.getName());
 
+    /**
+     * Adds a new instructor to the system after checking if the name, password, and role are valid.
+     *
+     * @param name     The name of the instructor.
+     * @param password The password for the instructor's account.
+     * @param role     The role assigned to the instructor.
+     * @return A message indicating the result of the operation.
+     */
     public String addInstructor(String name, String password, String role) {
         if (name.isEmpty()) {
             return "Instructor name is empty";
@@ -45,6 +57,14 @@ public class AdminService {
         }
     }
 
+    /**
+     * Adds a new client to the system after checking if the name, password, and role are valid.
+     *
+     * @param name     The name of the client.
+     * @param password The password for the client's account.
+     * @param role     The role assigned to the client.
+     * @return A message indicating the result of the operation.
+     */
     public String addClient(String name, String password, String role) {
         if (name.isEmpty()) {
             return "Client name is empty";
@@ -74,6 +94,12 @@ public class AdminService {
         }
     }
 
+    /**
+     * Deactivates a client by moving it to the deactivated users list and marking its status as inactive.
+     *
+     * @param name The name of the client to deactivate.
+     * @return A message indicating the result of the operation.
+     */
     public String deactivateClient(String name) {
         try {
             Map<String, Object> data = loadData();
@@ -93,6 +119,12 @@ public class AdminService {
         }
     }
 
+    /**
+     * Deactivates an instructor by moving it to the deactivated users list and marking its status as inactive.
+     *
+     * @param name The name of the instructor to deactivate.
+     * @return A message indicating the result of the operation.
+     */
     public String deactivateInstructor(String name) {
         try {
             Map<String, Object> data = loadData();
@@ -117,11 +149,24 @@ public class AdminService {
         }
     }
 
+    /**
+     * Loads the JSON data from the file.
+     *
+     * @return A map containing the loaded data.
+     * @throws IOException If an error occurs during data loading.
+     */
     private Map<String, Object> loadData() throws IOException {
         Map<String, Object> data = JsonFileHandler.loadJsonData();
         return (data != null) ? data : new HashMap<>();
     }
 
+    /**
+     * Retrieves a list of users from the data based on the specified key.
+     *
+     * @param data The data map.
+     * @param key  The key to retrieve the list for.
+     * @return A list of users.
+     */
     private List<Map<String, Object>> getListFromData(Map<String, Object> data, String key) {
         List<Map<String, Object>> list = (List<Map<String, Object>>) data.get(key);
         if (list == null) {
@@ -131,10 +176,24 @@ public class AdminService {
         return list;
     }
 
+    /**
+     * Checks if an instructor with the specified name already exists in the list of instructors awaiting approval.
+     *
+     * @param instructors The list of instructors awaiting approval.
+     * @param name        The name of the instructor to check.
+     * @return true if the instructor exists, false otherwise.
+     */
     private boolean isInstructorExists(List<Map<String, Object>> instructors, String name) {
         return isUserExists(instructors, name);
     }
 
+    /**
+     * Checks if a client with the specified name already exists in the list of users.
+     *
+     * @param clients The list of users.
+     * @param name    The name of the client to check.
+     * @return true if the client exists, false otherwise.
+     */
     private boolean isClientExists(List<Map<String, Object>> clients, String name) {
         return isUserExists(clients, name);
     }
@@ -148,6 +207,14 @@ public class AdminService {
         return false;
     }
 
+    /**
+     * Creates a new user map with the specified name, password, and role.
+     *
+     * @param name     The name of the user.
+     * @param password The password of the user.
+     * @param role     The role of the user.
+     * @return A map containing the user's data.
+     */
     private Map<String, Object> createUserMap(String name, String password, String role) {
         Map<String, Object> user = new HashMap<>();
         user.put("name", name);
@@ -157,6 +224,15 @@ public class AdminService {
         return user;
     }
 
+    /**
+     * Deactivates a user by marking their status as inactive and moving them to the deactivated users list.
+     *
+     * @param users            The list of users to search.
+     * @param deactivatedUsers The list of deactivated users.
+     * @param name             The name of the user to deactivate.
+     * @param role             The role of the user.
+     * @return true if the user was found and deactivated, false otherwise.
+     */
     private boolean deactivateUser(List<Map<String, Object>> users, List<Map<String, Object>> deactivatedUsers, String name, String role) {
         for (Map<String, Object> user : users) {
             if (user.get("name").equals(name) && user.get("role").equals(role)) {
@@ -169,11 +245,25 @@ public class AdminService {
         return false;
     }
 
+    /**
+     * Handles errors during the saving process of users or instructors.
+     *
+     * @param type The type of user ("instructor" or "client").
+     * @param name The name of the user.
+     * @param e    The exception that occurred.
+     * @return A message indicating the error that occurred.
+     */
     private String handleError(String type, String name, IOException e) {
         logger.severe(new StringBuilder().append("Error saving ").append(type).append(": ").append(name).append(" - ").append(e.getMessage()).toString());
         return "Error saving " + type + ": " + name + " - " + e.getMessage();
     }
 
+    /**
+     * Approves an instructor by moving them from the awaiting approval list to the active users list.
+     *
+     * @param name The name of the instructor to approve.
+     * @return A message indicating the result of the operation.
+     */
     public String approveInstructor(String name) {
         Map<String, Object> data;
         try {
@@ -219,7 +309,13 @@ public class AdminService {
         }
     }
 
-
+    /**
+     * Handles the feedback from an instructor to a client, marking it as handled and moving it to the handled feedback list.
+     *
+     * @param instructorName The name of the instructor.
+     * @param clientName     The name of the client.
+     * @return A message indicating the result of the operation.
+     */
     public String handleFeedback(String instructorName, String clientName) {
         Map<String, Object> data;
         try {
@@ -319,6 +415,13 @@ public class AdminService {
         return completedCount;
     }
 
+    /**
+     * Deactivates a specific subscription plan for a given user type.
+     *
+     * @param selectedPlanType The type of the subscription plan to deactivate.
+     * @param selectedUserType The user type for which to deactivate the plan.
+     * @return A message indicating the result of the operation.
+     */
     public String deactivatePlan(String selectedPlanType, String selectedUserType) {
         Map<String, Object> data = loadJsonData();
 
@@ -340,6 +443,13 @@ public class AdminService {
         return "Plan not found for the specified user type.";
     }
 
+    /**
+     * Activates a specific subscription plan for a given user type.
+     *
+     * @param selectedPlanType The type of the subscription plan to activate.
+     * @param selectedUserType The user type for which to activate the plan.
+     * @return A message indicating the result of the operation.
+     */
     public String activatePlan(String selectedPlanType, String selectedUserType) {
         Map<String, Object> data = loadJsonData();
 
@@ -361,7 +471,13 @@ public class AdminService {
         return "Plan not found for the specified user type.";
     }
 
-
+    /**
+     * Retrieves the status of a specific subscription plan for a given user type.
+     *
+     * @param planType The type of the subscription plan.
+     * @param userType The user type.
+     * @return The status of the subscription plan or an error message if the plan is not found.
+     */
     public String getPlanStatus(String planType, String userType) {
         Map<String, Object> data = loadJsonData();
         if (data == null) return "Error: Data could not be loaded.";
