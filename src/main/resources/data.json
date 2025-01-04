@@ -40,6 +40,10 @@
     "username" : "Ahmad"
   } ],
   "users" : {
+    "jaddou" : {
+      "password" : "s111",
+      "role" : "Admin"
+    },
     "Amjad" : {
       "password" : "s122",
       "role" : "Instructor"
@@ -626,6 +630,10 @@
     "to" : "Arqam"
   }, {
     "report_body" : "sssssssssssssssss",
+    "from" : "Amjad",
+    "to" : "Arqam"
+  }, {
+    "message_body" : "jaddou",
     "from" : "Amjad",
     "to" : "Arqam"
   } ],
