@@ -3,490 +3,122 @@ package edu.najah.services;
 import edu.najah.utilities.JsonFileHandler;
 
 import java.io.IOException;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class AdminService {
     private static final Logger logger = Logger.getLogger(ClientService.class.getName());
 
     public String addInstructor(String name, String password, String role) {
-        if (name.trim().isEmpty()) {
+        if (name.isEmpty()) {
             return "Instructor name is empty";
         }
-        if (password.trim().isEmpty()) {
+        if (password.isEmpty()) {
             return "Password is empty";
         }
-        if (role.trim().isEmpty()) {
+        if (role.isEmpty()) {
             return "Role is empty";
         }
 
-        Map<String, Object> data;
         try {
-            data = JsonFileHandler.loadJsonData();
-            if (data == null) {
-                data = new java.util.HashMap<>();
+            Map<String, Object> data = loadData();
+            List<Map<String, Object>> instructorsAwaitingApproval = getListFromData(data, "instructorsAwaitingApproval");
+
+            if (isInstructorExists(instructorsAwaitingApproval, name)) {
+                return "Account for instructor already exists with this name!";
             }
 
-            List<Map<String, Object>> instructorsAwaitingApproval = (List<Map<String, Object>>) data.get("instructorsAwaitingApproval");
-            if (instructorsAwaitingApproval == null) {
-                instructorsAwaitingApproval = new java.util.ArrayList<>();
-                data.put("instructorsAwaitingApproval", instructorsAwaitingApproval);
-            }
-
-
-            for (Map<String, Object> instructor : instructorsAwaitingApproval) {
-                if (instructor.get("name").equals(name)) {
-                    return "Account for instructor already exists with this name!";
-                }
-            }
-
-
-            Map<String, Object> newInstructor = new java.util.HashMap<>();
-            newInstructor.put("name", name);
-            newInstructor.put("password", password);
-            newInstructor.put("role", role);
-            newInstructor.put("status", "created");
-
-            newInstructor.put("active", true); // Set active flag to true by default
-
+            Map<String, Object> newInstructor = createUserMap(name, password, role);
             instructorsAwaitingApproval.add(newInstructor);
 
             JsonFileHandler.saveJsonData(data);
-
             return "Instructor created successfully!";
         } catch (IOException e) {
-            System.err.println("Error saving instructor: " + name + " - " + e.getMessage());
-            return "Error saving instructor: " + name + " - " + e.getMessage();
+            return handleError("instructor", name, e);
         }
     }
 
     public String addClient(String name, String password, String role) {
-        if (name.trim().isEmpty()) {
+        if (name.isEmpty()) {
             return "Client name is empty";
         }
-        if (password.trim().isEmpty()) {
+        if (password.isEmpty()) {
             return "Password is empty";
         }
-        if (role.trim().isEmpty()) {
+        if (role.isEmpty()) {
             return "Role is empty";
         }
 
-        Map<String, Object> data;
         try {
-            data = JsonFileHandler.loadJsonData();
-            if (data == null) {
-                data = new java.util.HashMap<>();
+            Map<String, Object> data = loadData();
+            List<Map<String, Object>> users = getListFromData(data, "users");
+
+            if (isClientExists(users, name)) {
+                return "Account for client already exists with this name!";
             }
 
-            List<Map<String, Object>> users = (List<Map<String, Object>>) data.get("users");
-            if (users == null) {
-                users = new java.util.ArrayList<>();
-                data.put("users", users);
-            }
-
-            for (Map<String, Object> user : users) {
-                if (user.get("name").equals(name)) {
-                    return "Account for client already exists with this name!";
-                }
-            }
-
-            Map<String, Object> newClient = new java.util.HashMap<>();
-            newClient.put("name", name);
-            newClient.put("password", password);
-            newClient.put("role", role);
-            newClient.put("active", true); // Set active flag to true by default
-
+            Map<String, Object> newClient = createUserMap(name, password, role);
             users.add(newClient);
 
             JsonFileHandler.saveJsonData(data);
-
             return "Client created successfully!";
         } catch (IOException e) {
-            System.err.println("Error saving client: " + name + " - " + e.getMessage());
-            return "Error saving client: " + name + " - " + e.getMessage();
+            return handleError("client", name, e);
         }
     }
-
 
     public String deactivateClient(String name) {
         try {
             Map<String, Object> data = loadData();
-            List<Map<String, Object>> users = getOrCreateList(data, "users");
-            List<Map<String, Object>> deactivatedUsers = getOrCreateList(data, "deactivatedUsers");
+            List<Map<String, Object>> users = getListFromData(data, "users");
+            List<Map<String, Object>> deactivatedUsers = getListFromData(data, "deactivatedUsers");
 
-            Map<String, Object> userToDeactivate = users.stream()
-                    .filter(user -> name.equals(user.get("name")) && "Client".equals(user.get("role")))
-                    .findFirst()
-                    .orElse(null);
+            boolean userFound = deactivateUser(users, deactivatedUsers, name, "Client");
 
-            if (userToDeactivate == null) {
+            if (!userFound) {
                 return "Account for client not found in the system!";
             }
 
-            userToDeactivate.put("active", false);
-            deactivatedUsers.add(userToDeactivate);
-            users.remove(userToDeactivate);
-
             JsonFileHandler.saveJsonData(data);
-
             return "Account for client deactivated successfully!";
         } catch (IOException e) {
-            System.err.println("Error deactivating client: " + name + " - " + e.getMessage());
-            return "Error deactivating client: " + name + " - " + e.getMessage();
+            return handleError("client", name, e);
         }
     }
-
 
     public String deactivateInstructor(String name) {
         try {
             Map<String, Object> data = loadData();
+            List<Map<String, Object>> users = getListFromData(data, "users");
+            List<Map<String, Object>> instructorsAwaitingApproval = getListFromData(data, "instructorsAwaitingApproval");
+            List<Map<String, Object>> deactivatedUsers = getListFromData(data, "deactivatedUsers");
 
-            List<Map<String, Object>> users = getOrCreateList(data, "users");
-            List<Map<String, Object>> instructorsAwaitingApproval = getOrCreateList(data, "instructorsAwaitingApproval");
-            List<Map<String, Object>> deactivatedUsers = getOrCreateList(data, "deactivatedUsers");
+            boolean instructorFound = deactivateUser(users, deactivatedUsers, name, "Instructor");
 
-            boolean instructorFound = isInstructorFound(name, users, deactivatedUsers, false);
             if (!instructorFound) {
-                instructorFound = isInstructorFound(name, instructorsAwaitingApproval, deactivatedUsers, false);
+                instructorFound = deactivateUser(instructorsAwaitingApproval, deactivatedUsers, name, "Instructor");
             }
 
             if (!instructorFound) {
                 return "Account for instructor not found in the system!";
             }
 
-            // Save the updated data back to the JSON file
             JsonFileHandler.saveJsonData(data);
-
             return "Account for instructor deactivated successfully!";
         } catch (IOException e) {
-            System.err.println("Error deactivating instructor: " + name + " - " + e.getMessage());
-            return "Error deactivating instructor: " + name + " - " + e.getMessage();
+            return handleError("instructor", name, e);
         }
     }
 
-
-    private boolean isInstructorFound(String name, List<Map<String, Object>> instructorsAwaitingApproval, List<Map<String, Object>> deactivatedUsers, boolean instructorFound) {
-        for (Map<String, Object> instructor : instructorsAwaitingApproval) {
-            if (instructor.get("name").equals(name) && instructor.get("role").equals("Instructor")) {
-                // Deactivate and move to deactivatedUsers
-                instructor.put("active", false);
-                deactivatedUsers.add(instructor);
-                instructorsAwaitingApproval.remove(instructor);
-                instructorFound = true;
-                break;
-            }
-        }
-        return instructorFound;
+    private Map<String, Object> loadData() throws IOException {
+        Map<String, Object> data = JsonFileHandler.loadJsonData();
+        return (data != null) ? data : new HashMap<>();
     }
 
-    public String approveInstructor(String name) {
-        try {
-            // Load JSON data
-            Map<String, Object> data = JsonFileHandler.loadJsonData();
-            if (data == null) {
-                data = new HashMap<>();
-            }
-
-            // Retrieve the instructorsAwaitingApproval list
-            List<Map<String, Object>> instructorsAwaitingApproval = getInstructorsAwaitingApproval(data);
-            if (instructorsAwaitingApproval == null) {
-                return "No instructors awaiting approval or incorrect data format.";
-            }
-
-            // Retrieve the users list
-            List<Map<String, Object>> users = getUsersList(data);
-
-
-            Map<String, Object> instructorToApprove = findInstructorToApprove(instructorsAwaitingApproval, name);
-            if (instructorToApprove == null) {
-                return "Instructor account not approved due to incomplete data!";
-            }
-
-            // Approve the instructor by setting the active flag to true
-            instructorToApprove.put("active", true);
-
-            // Add the instructor to the users list
-            users.add(instructorToApprove);
-
-            // Save the updated data back to the JSON file
-            JsonFileHandler.saveJsonData(data);
-
-            // Return success message
-            return "Instructor account approved successfully!";
-        } catch (IOException e) {
-            System.err.println("Error approving instructor: " + name + " - " + e.getMessage());
-            return "Error approving instructor: " + name + " - " + e.getMessage();
-        }
-    }
-
-    private List<Map<String, Object>> getInstructorsAwaitingApproval(Map<String, Object> data) {
-        Object instructorsObject = data.get("instructorsAwaitingApproval");
-        if (instructorsObject instanceof List) {
-            return (List<Map<String, Object>>) instructorsObject;
-        }
-        return null;
-    }
-
-    private List<Map<String, Object>> getUsersList(Map<String, Object> data) {
-        Object usersObject = data.get("users");
-        if (usersObject instanceof List) {
-            return (List<Map<String, Object>>) usersObject;
-        } else {
-            List<Map<String, Object>> users = new ArrayList<>();
-            data.put("users", users);
-            return users;
-        }
-    }
-
-    private boolean isInstructorActive(List<Map<String, Object>> users, String name) {
-        return users.stream().anyMatch(user -> name.equals(user.get("name")));
-    }
-
-    private Map<String, Object> findInstructorToApprove(List<Map<String, Object>> instructorsAwaitingApproval, String name) {
-        Iterator<Map<String, Object>> iterator = instructorsAwaitingApproval.iterator();
-        while (iterator.hasNext()) {
-            Map<String, Object> instructor = iterator.next();
-            if (name.equals(instructor.get("name"))) {
-                iterator.remove(); // Remove from awaiting approval
-                return instructor;
-            }
-        }
-        return null;
-    }
-
-    public String generatePopularProgramsReport() {
-        try {
-            // Load the program data
-            Map<String, Object> data = loadData();
-
-            // Check if no data is found
-            if (data.isEmpty()) {
-                return "No programs or enrollment data available.";
-            }
-
-            // Retrieve or create the necessary lists
-            List<Map<String, Object>> programs = getOrCreateList(data, "programs");
-            List<Map<String, Object>> enrolledPrograms = getOrCreateList(data, "enrolledPrograms");
-
-            // Check if programs or enrolledPrograms data is missing
-            if (programs.isEmpty() || enrolledPrograms.isEmpty()) {
-                return "No programs or enrollment data available.";
-            }
-
-            // Calculate the count of users per program
-            Map<Integer, Integer> programUserCount = calculateProgramUserCount(enrolledPrograms);
-
-            // Prepare the report data based on program and user count
-            List<Map<String, Object>> reportData = prepareReportData(programs, programUserCount);
-
-            // If no report data is available, return appropriate message
-            if (reportData.isEmpty()) {
-                return "No report data found.";
-            }
-
-            // Store the report data in the statisticsReports section
-            data.put("statisticsReports", reportData);
-            JsonFileHandler.saveJsonData(data);
-
-            // Return success message
-            return "The report is successfully generated and ready for viewing.";
-        } catch (Exception e) {
-            // Handle any unexpected errors
-            System.err.println("Error generating the report: " + e.getMessage());
-            return "An error occurred while generating the report.";
-        }
-    }
-
-    private Map<Integer, Integer> calculateProgramUserCount(List<Map<String, Object>> enrolledPrograms) {
-        Map<Integer, Integer> programUserCount = new HashMap<>();
-        for (Map<String, Object> enrollment : enrolledPrograms) {
-            Integer programId = (Integer) enrollment.get("program_id");
-            if (programId != null) {
-                programUserCount.put(programId, programUserCount.getOrDefault(programId, 0) + 1);
-            }
-        }
-        return programUserCount;
-    }
-
-    private List<Map<String, Object>> prepareReportData(List<Map<String, Object>> programs, Map<Integer, Integer> programUserCount) {
-        List<Map<String, Object>> reportData = new ArrayList<>();
-        for (Map<String, Object> program : programs) {
-            Integer programId = (Integer) program.get("id");
-            String title = (String) program.get("title");
-            Integer userCount = programUserCount.getOrDefault(programId, 0);
-
-            Map<String, Object> programReport = new HashMap<>();
-            programReport.put("program", title);
-            programReport.put("userCount", userCount);
-            reportData.add(programReport);
-        }
-
-        // Sort by user count in descending order
-        reportData.sort((p1, p2) -> Integer.compare((Integer) p2.get("userCount"), (Integer) p1.get("userCount")));
-        return reportData;
-    }
-
-
-    public String handleFeedback(String instructorName, String clientName) {
-        Map<String, Object> data;
-        try {
-            // Check if the instructorName or clientName is empty
-            if (instructorName == null || instructorName.trim().isEmpty() || clientName == null || clientName.trim().isEmpty()) {
-                return "Feedback not handled"; // Return early if either name is empty
-            }
-
-            // Load JSON data
-            data = JsonFileHandler.loadJsonData();
-            if (data == null) {
-                data = new java.util.HashMap<>();
-            }
-
-            // Retrieve the feedback list
-            Object feedbackObject = data.get("feedback");
-            if (feedbackObject == null || !(feedbackObject instanceof List)) {
-                return "No feedback available or incorrect data format";
-            }
-            List<Map<String, String>> feedback = (List<Map<String, String>>) feedbackObject;
-
-            // Retrieve the handledFeedbacks list
-            Object handledFeedbacksObject = data.get("handledFeedbacks");
-            if (handledFeedbacksObject == null || !(handledFeedbacksObject instanceof List)) {
-                handledFeedbacksObject = new java.util.ArrayList<>();
-                data.put("handledFeedbacks", handledFeedbacksObject);
-            }
-            List<Map<String, String>> handledFeedbacks = (List<Map<String, String>>) handledFeedbacksObject;
-
-            // Move all feedbacks from feedback list to handledFeedbacks
-            for (Map<String, String> feedbackItem : feedback) {
-                // Ensure the feedback status is set as handled
-                feedbackItem.put("status", "handled");
-                handledFeedbacks.add(feedbackItem);
-            }
-
-            // Clear the feedback list (since all feedbacks are now handled)
-            feedback.clear();
-
-            // Save the updated data back to the JSON file
-            JsonFileHandler.saveJsonData(data);
-
-            // Return a success message
-            return "Feedback from " + instructorName + " to " + clientName + " handled successfully!";
-        } catch (IOException e) {
-            System.err.println("Error handling feedback from " + instructorName + " to " + clientName + " - " + e.getMessage());
-            return "Error handling feedback from " + instructorName + " to " + clientName + " - " + e.getMessage();
-        }
-    }
-
-
-    public int getActiveProgramsCount() {
-        try {
-            Map<String, Object> data = loadData();
-
-            List<Map<String, Object>> programs = getOrCreateList(data, "programs");
-
-            long activeCount = programs.stream()
-                    .filter(program -> "active".equalsIgnoreCase((String) program.get("status")))
-                    .count();
-
-            return (int) activeCount;
-        } catch (Exception e) {
-            System.err.println("Error fetching active programs count: " + e.getMessage());
-            return 0; // Return 0 in case of an exception
-        }
-    }
-
-
-    public int getCompletedProgramsCount() {
-        try {
-            // Load JSON data using the helper method
-            Map<String, Object> data = loadData();
-
-            // Retrieve the programs list
-            List<Map<String, Object>> programs = getOrCreateList(data, "programs");
-
-            // Count completed programs using stream API
-            long completedCount = programs.stream()
-                    .filter(program -> "completed".equalsIgnoreCase((String) program.get("status")))
-                    .count();
-
-            return (int) completedCount;
-        } catch (Exception e) {
-            System.err.println("Error fetching completed programs count: " + e.getMessage());
-            return 0; // Return 0 in case of an exception
-        }
-    }
-
-
-    public String updatePlanStatus(String selectedPlanType, String selectedUserType, String newStatus) {
-        try {
-            Map<String, Object> data = loadData();
-
-            List<Map<String, Object>> subscriptions = getOrCreateList(data, "subscriptions");
-
-            for (Map<String, Object> subscription : subscriptions) {
-                String userType = (String) subscription.get("userType");
-                String planType = (String) subscription.get("planType");
-
-                if (userType.equals(selectedUserType) && planType.equals(selectedPlanType)) {
-                    subscription.put("status", newStatus); // Update plan status
-                    // Save updated data to JSON file
-                    JsonFileHandler.saveJsonData(data);
-                    return String.format("The %s subscription plan for %s has been %s successfully.", selectedPlanType, selectedUserType, newStatus);
-                }
-            }
-            return "Plan not found for the specified user type.";
-        } catch (IOException e) {
-            return String.format("Error updating plan status: %s", e.getMessage());
-        }
-    }
-
-
-    public String deactivatePlan(String selectedPlanType, String selectedUserType) {
-        return updatePlanStatus(selectedPlanType, selectedUserType, "inactive");
-    }
-
-    public String activatePlan(String selectedPlanType, String selectedUserType) {
-        return updatePlanStatus(selectedPlanType, selectedUserType, "active");
-    }
-
-
-    public String getPlanStatus(String planType, String userType) {
-        // Load the JSON data
-        Map<String, Object> data = loadData();
-
-        // Retrieve the subscriptions table
-        List<Map<String, Object>> subscriptions = getOrCreateList(data, "subscriptions");
-
-        // Search for the matching subscription
-        for (Map<String, Object> subscription : subscriptions) {
-            String storedUserType = (String) subscription.get("userType");
-            String storedPlanType = (String) subscription.get("planType");
-
-            if (storedUserType != null && storedPlanType != null &&
-                    storedUserType.equalsIgnoreCase(userType) &&
-                    storedPlanType.equalsIgnoreCase(planType)) {
-
-                return subscription.getOrDefault("status", "Error: Status field is missing for the selected plan.").toString();
-            }
-        }
-
-        return "Plan not found for the specified user type and plan type.";
-    }
-
-
-    public Map<String, Object> loadData() {
-        try {
-            Map<String, Object> data = JsonFileHandler.loadJsonData();
-            return data != null ? data : new HashMap<>();
-        } catch (IOException e) {
-            logger.severe("data not found");
-            return new HashMap<>();
-        }
-
-    }
-
-    private List<Map<String, Object>> getOrCreateList(Map<String, Object> data, String key) {
+    private List<Map<String, Object>> getListFromData(Map<String, Object> data, String key) {
         List<Map<String, Object>> list = (List<Map<String, Object>>) data.get(key);
         if (list == null) {
             list = new ArrayList<>();
@@ -495,4 +127,268 @@ public class AdminService {
         return list;
     }
 
+    private boolean isInstructorExists(List<Map<String, Object>> instructors, String name) {
+        return isUserExists(instructors, name);
+    }
+
+    private boolean isClientExists(List<Map<String, Object>> clients, String name) {
+        return isUserExists(clients, name);
+    }
+
+    private boolean isUserExists(List<Map<String, Object>> users, String name) {
+        for (Map<String, Object> user : users) {
+            if (user.get("name").equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Map<String, Object> createUserMap(String name, String password, String role) {
+        Map<String, Object> user = new HashMap<>();
+        user.put("name", name);
+        user.put("password", password);
+        user.put("role", role);
+        user.put("active", true);
+        return user;
+    }
+
+    private boolean deactivateUser(List<Map<String, Object>> users, List<Map<String, Object>> deactivatedUsers, String name, String role) {
+        for (Map<String, Object> user : users) {
+            if (user.get("name").equals(name) && user.get("role").equals(role)) {
+                user.put("active", false);
+                deactivatedUsers.add(user);
+                users.remove(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String handleError(String type, String name, IOException e) {
+        logger.severe("Error saving " + type + ": " + name + " - " + e.getMessage());
+        return "Error saving " + type + ": " + name + " - " + e.getMessage();
+    }
+
+    public String approveInstructor(String name) {
+        Map<String, Object> data;
+        try {
+            data = loadData();
+            List<Map<String, Object>> instructorsAwaitingApproval = (List<Map<String, Object>>) data.get("instructorsAwaitingApproval");
+
+            List<Map<String, Object>> users = (List<Map<String, Object>>) data.get("users");
+            if (users == null) {
+                users = new ArrayList<>();
+                data.put("users", users);
+            }
+
+            for (Map<String, Object> user : users) {
+                if (user.get("name").equals(name)) {
+                    return "Instructor is already an active user and cannot be approved again.";
+                }
+            }
+
+            boolean instructorFound = false;
+            Map<String, Object> instructorToApprove = null;
+            for (Map<String, Object> instructor : instructorsAwaitingApproval) {
+                if (instructor.get("name").equals(name)) {
+                    instructorToApprove = instructor;
+                    instructorsAwaitingApproval.remove(instructor);  // Remove from awaiting approval
+                    instructorFound = true;
+                    break;
+                }
+            }
+
+            if (!instructorFound) {
+                return "Instructor account not approved due to incomplete data!";
+            }
+
+            instructorToApprove.put("active", true);
+
+            users.add(instructorToApprove);
+
+            JsonFileHandler.saveJsonData(data);
+
+            return "Instructor account approved successfully!";
+        } catch (IOException e) {
+            return handleError("instructor", name, e);
+        }
+    }
+
+
+    public String handleFeedback(String instructorName, String clientName) {
+        Map<String, Object> data;
+        try {
+            if (instructorName.trim().isEmpty()) {
+                return "Instructor name is empty";
+            }
+            if (clientName.trim().isEmpty()) {
+                return "Client name is empty";
+            }
+            data = loadData();
+
+            List<Map<String, String>> feedback = (List<Map<String, String>>) data.get("feedback");
+            if (feedback == null) {
+                return "No feedback available";
+            }
+
+            List<Map<String, String>> handledFeedbacks = (List<Map<String, String>>) data.get("handledFeedbacks");
+            if (handledFeedbacks == null) {
+                handledFeedbacks = new ArrayList<>();
+                data.put("handledFeedbacks", handledFeedbacks);
+            }
+
+            boolean feedbackFound = false;
+            Map<String, String> feedbackToHandle = null;
+            for (Map<String, String> feedbackItem : feedback) {
+                feedbackItem.putIfAbsent("status", "not handled");
+                if (feedbackItem.get("from").equals(instructorName) && feedbackItem.get("to").equals(clientName)) {
+                    feedbackToHandle = feedbackItem;
+                    feedbackFound = true;
+                    break;
+                }
+            }
+
+            if (!feedbackFound) {
+                return "Specified feedback is not available";
+            }
+
+            feedbackToHandle.put("status", "handled");
+            handledFeedbacks.add(feedbackToHandle);
+            feedback.remove(feedbackToHandle);
+
+            JsonFileHandler.saveJsonData(data);
+            return "Feedback from " + instructorName + " to " + clientName + " handled successfully!";
+        } catch (IOException e) {
+            logger.severe("Error handling feedback from " + instructorName + " to " + clientName + " - " + e.getMessage());
+            return "Error handling feedback from " + instructorName + " to " + clientName + " - " + e.getMessage();
+        }
+    }
+
+    private Map<String, Object> loadJsonData() {
+        try {
+            Map<String, Object> data = JsonFileHandler.loadJsonData();
+            if (data == null) {
+                throw new IOException("Data could not be loaded.");
+            }
+            return data;
+        } catch (IOException e) {
+            logger.severe("Error loading JSON data: " + e.getMessage());
+            return null;
+        }
+    }
+
+    private List<Map<String, Object>> getProgramsList(Map<String, Object> data) {
+        return (List<Map<String, Object>>) data.get("programs");
+    }
+
+    private List<Map<String, Object>> getSubscriptionsList(Map<String, Object> data) {
+        return (List<Map<String, Object>>) data.get("subscriptions");
+    }
+
+    public int getActiveProgramsCount() {
+        Map<String, Object> data = loadJsonData();
+        if (data == null) return 0;
+
+        List<Map<String, Object>> programs = getProgramsList(data);
+        if (programs == null) return 0;
+
+        int activeCount = 0;
+        for (Map<String, Object> program : programs) {
+            if ("active".equalsIgnoreCase((String) program.get("status"))) {
+                activeCount++;
+            }
+        }
+        return activeCount;
+    }
+
+    public int getCompletedProgramsCount() {
+        Map<String, Object> data = loadJsonData();
+        if (data == null) return 0;
+
+        List<Map<String, Object>> programs = getProgramsList(data);
+        if (programs == null) return 0;
+
+        int completedCount = 0;
+        for (Map<String, Object> program : programs) {
+            if ("completed".equalsIgnoreCase((String) program.get("status"))) {
+                completedCount++;
+            }
+        }
+        return completedCount;
+    }
+
+    public String deactivatePlan(String selectedPlanType, String selectedUserType) {
+        Map<String, Object> data = loadJsonData();
+        if (data == null) return "Error: Data could not be loaded.";
+
+        List<Map<String, Object>> subscriptions = getSubscriptionsList(data);
+        if (subscriptions == null) return "Error: No subscriptions found.";
+
+        for (Map<String, Object> subscription : subscriptions) {
+            String userType = (String) subscription.get("userType");
+            String planType = (String) subscription.get("planType");
+            if (userType.equals(selectedUserType) && planType.equals(selectedPlanType)) {
+                subscription.put("status", "inactive");
+                try {
+                    JsonFileHandler.saveJsonData(data);
+                } catch (IOException e) {
+                    return "Error saving data: " + e.getMessage();
+                }
+                return "The " + selectedPlanType + " subscription plan for " + selectedUserType + " has been deactivated successfully.";
+            }
+        }
+        return "Plan not found for the specified user type.";
+    }
+
+    public String activatePlan(String selectedPlanType, String selectedUserType) {
+        Map<String, Object> data = loadJsonData();
+        if (data == null) return "Error: Data could not be loaded.";
+
+        List<Map<String, Object>> subscriptions = getSubscriptionsList(data);
+        if (subscriptions == null) return "Error: No subscriptions found.";
+
+        for (Map<String, Object> subscription : subscriptions) {
+            String userType = (String) subscription.get("userType");
+            String planType = (String) subscription.get("planType");
+            if (userType.equals(selectedUserType) && planType.equals(selectedPlanType)) {
+                subscription.put("status", "active");
+                try {
+                    JsonFileHandler.saveJsonData(data);
+                } catch (IOException e) {
+                    return "Error saving data: " + e.getMessage();
+                }
+                return "The " + selectedPlanType + " subscription plan for " + selectedUserType + " has been activated successfully.";
+            }
+        }
+        return "Plan not found for the specified user type.";
+    }
+
+
+    public String getPlanStatus(String planType, String userType) {
+        Map<String, Object> data = loadJsonData();
+        if (data == null) return "Error: Data could not be loaded.";
+
+        List<Map<String, Object>> subscriptions = getSubscriptionsList(data);
+        if (subscriptions == null) return "Error: No subscriptions found.";
+
+        for (Map<String, Object> subscription : subscriptions) {
+            String userTypeFromData = (String) subscription.get("userType");
+            String planTypeFromData = (String) subscription.get("planType");
+
+            if (userTypeFromData != null && planTypeFromData != null && userTypeFromData.equalsIgnoreCase(userType) && planTypeFromData.equalsIgnoreCase(planType)) {
+
+                Object status = subscription.get("status");
+                if (status != null) {
+                    return (String) status;
+                } else {
+                    return "Error: Status field is missing for the selected plan.";
+                }
+            }
+        }
+        return "Plan not found for the specified user type and plan type.";
+    }
 }
+
+
+

@@ -1,8 +1,6 @@
 package stepdefinitions.AdminStepDefinitions;
 
 import edu.najah.services.AdminService;
-import edu.najah.services.ClientService;
-import edu.najah.services.InstructorService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -14,13 +12,11 @@ import java.util.logging.Logger;
 public class AdminUserManagementStepDefinitions {
     private static final Logger logger = Logger.getLogger(AdminUserManagementStepDefinitions.class.getName());
     private final AdminService adminService = new AdminService();
-    private final ClientService clientService = new ClientService();
-    private final InstructorService instructorService = new InstructorService();
     private String feedbackMessage;
 
     @Given("I am logged in as an Admin user")
     public void iAmLoggedInAsAnAdminUser() {
-        // This step could include a login logic if required. The setup is done in the Scenario Outline itself.
+        logger.info("I logged in as an Admin user");
     }
 
     @When("I navigate to the User Management section")
