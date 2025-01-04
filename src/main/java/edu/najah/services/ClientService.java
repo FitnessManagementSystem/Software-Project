@@ -16,6 +16,22 @@ import java.util.logging.Logger;
 public class ClientService {
     private static final Logger logger = Logger.getLogger(ClientService.class.getName());
 
+    private static void getCompletedPrograms(String userName, List<Map<String, Object>> programs, List<Map<String, Object>> enrolledUsers, List<Map<String, Object>> completedPrograms) {
+        for (Map<String, Object> program : programs) {
+            for (Map<String, Object> enrolledUser : enrolledUsers) {
+                if (program.get("id").equals(enrolledUser.get("programId"))) {
+                    if ("active".equals(program.get("status"))) {
+                        logger.warning("Program is still active");
+                        continue;
+                    }
+                    if (enrolledUser.get("userName").equals(userName)) {
+                        completedPrograms.add(program);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Creates a new user profile.
      *
