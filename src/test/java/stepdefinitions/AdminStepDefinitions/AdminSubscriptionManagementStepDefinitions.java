@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class AdminSubscriptionManagementStepDefinitions {
@@ -44,7 +45,7 @@ public class AdminSubscriptionManagementStepDefinitions {
     }
 
     @Then("The {string} subscription plan for {string} should be marked as {string}")
-    public void theSubscriptionPlanForShouldBeMarkedAs(String planType, String userType, String expectedStatus) {
+    public void theSubscriptionPlanForShouldBeMarkedAs(String planType, String userType, String expectedStatus) throws IOException {
         String actualStatus = adminService.getPlanStatus(planType, userType);
         Assert.assertEquals("The plan status did not match the expected status.", expectedStatus.toLowerCase(), actualStatus.toLowerCase());
         logger.info("Verified that the " + planType + " subscription plan for " + userType + " is marked as " + expectedStatus + ".");

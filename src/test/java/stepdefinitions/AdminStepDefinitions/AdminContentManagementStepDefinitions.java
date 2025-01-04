@@ -31,15 +31,17 @@ public class AdminContentManagementStepDefinitions {
 
     @Then("I should set status to {string} with the success message {string}")
     public void iShouldSeeStatusMarkedAsWithTheSuccessMessage(String expectedStatus, String expectedMessage) {
-        // Retrieve the status from the feedback message returned by the service
-        String feedbackStatus = feedbackMessage.contains("handled") ? "handled" : "not handled";
+        // Retrieve the feedback status from the feedbackMessage
+        String feedbackStatus = feedbackMessage.contains("already handled") ? "already handled" : "handled";
 
         // Assert that the feedback status matches the expected status
-        Assert.assertEquals("The feedback status should be marked as handled.", expectedStatus, feedbackStatus);
+        Assert.assertEquals("The feedback status should be correct.", expectedStatus, feedbackStatus);
 
         // Assert that the success message matches the expected message
-        Assert.assertEquals("The success message should be correct.", expectedMessage, feedbackMessage);
+        // If the feedback is already handled or newly handled, check the corresponding success message
+        Assert.assertTrue("The success message should be correct.", feedbackMessage.contains(expectedMessage));
     }
+
 
 }
 

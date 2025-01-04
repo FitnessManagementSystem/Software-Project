@@ -567,6 +567,28 @@
     "role" : "Client",
     "name" : "Jane Smith",
     "active" : false
+  }, {
+    "password" : "password123",
+    "role" : "Instructor",
+    "name" : "John Doe",
+    "active" : false,
+    "status" : "created"
+  }, {
+    "password" : "password456",
+    "role" : "Client",
+    "name" : "Jane Smith",
+    "active" : false
+  }, {
+    "password" : "password123",
+    "role" : "Instructor",
+    "name" : "John Doe",
+    "active" : false,
+    "status" : "created"
+  }, {
+    "password" : "password456",
+    "role" : "Client",
+    "name" : "Jane Smith",
+    "active" : false
   } ],
   "reviews" : [ {
     "review" : "It was so good",
@@ -591,14 +613,6 @@
     "message_body" : "Hello, I noticed you're falling behind on your program. Let me know if you need help!",
     "from" : "Instructor1",
     "to" : "Client1"
-  }, {
-    "report_body" : "you doing good",
-    "from" : "instructor1",
-    "to" : "client1"
-  }, {
-    "message_body" : "you doing good",
-    "from" : "instructor1",
-    "to" : "client1"
   } ],
   "notifications" : [ {
     "program_id" : 5,
@@ -630,7 +644,8 @@
     "userCount" : 0,
     "program" : "Boxing"
   } ],
-  "feedback" : [ {
+  "feedback" : [ ],
+  "handledFeedbacks" : [ {
     "from" : "Instructor1",
     "to" : "Client1",
     "feedback_body" : "You are doing good",
@@ -640,16 +655,7 @@
     "to" : "Client2",
     "feedback_body" : "You are doing good",
     "status" : "handled"
-  }, {
-    "from" : "instructor1",
-    "to" : "client1",
-    "feedback_body" : "you doing good"
-  }, {
-    "from" : "instructor1",
-    "to" : "client1",
-    "feedback_body" : "nice progress"
   } ],
-  "handledFeedbacks" : [ ],
   "subscriptions" : [ {
     "userType" : "Client1",
     "planType" : "Basic",

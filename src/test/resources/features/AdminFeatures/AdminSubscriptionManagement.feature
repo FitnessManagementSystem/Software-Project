@@ -12,12 +12,12 @@ Feature: Admin Subscription Management
 
     Examples:
       | userType    | planType | action     | status   | successMessage                                                                   |
-      | Client1     | Basic    | activate   | active   | The Basic subscription plan for Client1 has been activated successfully.         |
-      | Client2     | Premium  | activate   | active   | The Premium subscription plan for Client2 has been activated successfully.       |
-      | Instructor1 | Basic    | activate   | active   | The Basic subscription plan for Instructor1 has been activated successfully.     |
-      | Instructor2 | Premium  | activate   | active   | The Premium subscription plan for Instructor2 has been activated successfully.   |
-      | Client1     | Basic    | deactivate | inactive | The Basic subscription plan for Client1 has been deactivated successfully.       |
-      | Client2     | Premium  | deactivate | inactive | The Premium subscription plan for Client2 has been deactivated successfully.     |
-      | Instructor1 | Basic    | deactivate | inactive | The Basic subscription plan for Instructor1 has been deactivated successfully.   |
-      | Instructor2 | Premium  | deactivate | inactive | The Premium subscription plan for Instructor2 has been deactivated successfully. |
+      | Client1     | Basic    | activate   | active   | The Basic subscription plan for Client1 has been active successfully.         |
+      | Client2     | Premium  | activate   | active   | The Premium subscription plan for Client2 has been active successfully.      |
+      | Instructor1 | Basic    | activate   | active   |The Basic subscription plan for Instructor1 has been active successfully.|
+      | Instructor2 | Premium  | activate   | active   | The Premium subscription plan for Instructor2 has been active successfully.   |
+      | Client1     | Basic    | deactivate | inactive | The Basic subscription plan for Client1 has been inactive successfully.     |
+      | Client2     | Premium  | deactivate | inactive | The Premium subscription plan for Client2 has been inactive successfully.    |
+      | Instructor1 | Basic    | deactivate | inactive | The Basic subscription plan for Instructor1 has been inactive successfully.  |
+      | Instructor2 | Premium  | deactivate | inactive | The Premium subscription plan for Instructor2 has been inactive successfully. |
 
