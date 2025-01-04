@@ -13,50 +13,47 @@ public class InstructorClientInteraction {
     private static final Logger logger = Logger.getLogger(InstructorClientInteraction.class.getName());
     private final InstructorService instructorService = new InstructorService();
     private String feedbackMessage;
-    private String feedbackStatus;
-
     @Given("the instructor accesses the client interaction page")
     public void the_instructor_accesses_the_client_interaction_page() {
         // Simulate the action of accessing the page
         logger.info("The instructor accesses the client interaction page");
     }
 
-    @When("the instructor sends a report {string} to the client")
-    public void theInstructorSendsAReportToTheClient (String report) throws IOException {
-        feedbackMessage = instructorService.sendReport (report);
+
+    @When("the instructor sends a report {string}  from {string}to the {string}")
+    public void theInstructorSendsAReportFromToThe(String report, String reciver, String sender) {
+        feedbackMessage = instructorService.sendReport (report,reciver,sender);
 
     }
-
-    @When("the instructor sends a message {string} to the client")
-    public void theInstructorSendsAMessageToTheClient (String message) throws IOException{
-        feedbackMessage = instructorService.sendMessage(message);
-
-    }
-
-
     @Then("I should see a report {string}")
     public void iShouldSeeAReport(String reportMessage) throws IOException {
         Assert.assertEquals("Feedback message did not match expected", reportMessage, feedbackMessage);
         logger.info("Feedback message matched expected: " + reportMessage);
     }
 
-    @Then("I should see a message  {string}")
-    public void iShouldSeeAMessage(String message) {
-        Assert.assertEquals("Feedback message did not match expected", message, feedbackMessage);
-        logger.info("Feedback message matched expected: " + message);
+
+    @When("the instructor sends a message {string}  from {string}to the {string}")
+    public void theInstructorSendsAMessageFromToThe(String message, String reciver, String sender) {
+        feedbackMessage = instructorService.sendMessage (message,reciver,sender);
+
     }
 
+    @Then("I should see a message  {string}")
+    public void iShouldSeeAMessage(String MSG) {
+        Assert.assertEquals("Feedback message did not match expected",MSG , feedbackMessage);
+        logger.info("Feedback message matched expected: " + MSG);
+    }
 
-    @When("the instructor sends a feedback {string} to the client")
-    public void theInstructorSendsAFeedbackToTheClient(String feedback) throws IOException {
-        feedbackMessage = instructorService.sendFeedback(feedback);
+    @When("the instructor sends a feedback {string}  from {string}to the {string}")
+    public void theInstructorSendsAFeedbackFromToThe(String feedback, String reciver, String sender) {
+        feedbackMessage = instructorService.sendFeedback (feedback,reciver,sender);
 
     }
 
     @Then("I should see a feedback {string}")
-    public void iShouldSeeAFeedback(String feedback) {
-        Assert.assertEquals("Feedback message did not match expected", feedback, feedbackMessage);
-        logger.info("Feedback message matched expected: " + feedback);
+    public void iShouldSeeAFeedback(String feedbackM) {
+        Assert.assertEquals("Feedback message did not match expected",feedbackM , feedbackMessage);
+        logger.info("Feedback message matched expected: " + feedbackM);
     }
 }
 
